@@ -1,14 +1,15 @@
 import React from 'react';
-import {Editor, EditorState, ContentState} from 'draft-js';
+import {Editor, EditorState, ContentState, convertToRaw, convertFromRaw} from 'draft-js';
 import hanzi from 'hanzi'
 import 'draft-js/dist/Draft.css';
 import {getSelectionText} from 'draftjs-utils'
 
-export default function MyEditor() {
+const STORAGE_KEY = 'clippySavedEditorState'
 
-  const [editorState, setEditorState] = React.useState(
-    () => EditorState.createEmpty(
-  ));
+export default function MyEditor() {
+  const savedEditorState = localStorage.getItem(STORAGE_KEY)
+  const defaultEditorState = savedEditorState != null ? EditorState.createWithContent(convertFromRaw(JSON.parse(savedEditorState))) : EditorState.createEmpty()
+  const [editorState, setEditorState] = React.useState(defaultEditorState);
   React.useEffect(() => hanzi.start(), [])
 
 const selectedText = getSelectionText(editorState)?.trim()
@@ -26,16 +27,15 @@ const definitionsData = (hanzi.definitionLookup(selectedText)?.slice(0, 3) ?? []
 const simplified = definitionsData?.[0]?.simplified
 const traditional = definitionsData?.[0]?.traditional
 
+const saveText = () => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(convertToRaw(editorState.getCurrentContent())))
+}
+
   return <div >
   <Editor placeholder="Paste Chinese text" editorState={editorState} onChange={setEditorState} />
+  <button onClick={saveText}>Save Text</button>
   <p>
   <h3>Character: {character} {traditional != null && traditional !== simplified && `(${traditional})`}</h3>
-  <h3>Pinyin & Meaning</h3>
-  <ol>
-  {definitionsData.map((definitionData, idx) => {
-    return <li key={idx}>{definitionData?.pinyin} - {definitionData?.definition}</li>
-  })}
-  </ol>
   <h3>Basic: {basicComponents.map((component, idx) => {
     return <><span key={idx} className="red">{component}</span>({hanzi.getRadicalMeaning(component)}), </>
   }
@@ -46,6 +46,12 @@ const traditional = definitionsData?.[0]?.traditional
   }
   )}
   </h3>
+  <h3>Pinyin & Meaning</h3>
+  <ol>
+  {definitionsData.map((definitionData, idx) => {
+    return <li key={idx}>{definitionData?.pinyin} - {definitionData?.definition}</li>
+  })}
+  </ol>
   </p>
 
 </div>
