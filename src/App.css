@@ -1,11 +1,12 @@
 .App {
   padding: 20px;
   font-family: Helvetica;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .DraftEditor-root {
   font-size: 40px;
-  max-width: 800px;
 }
 
 .red {

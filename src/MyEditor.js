@@ -31,7 +31,7 @@ const saveText = () => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(convertToRaw(editorState.getCurrentContent())))
 }
 
-  return <div >
+  return <>
   <Editor placeholder="Paste Chinese text" editorState={editorState} onChange={setEditorState} />
   <button onClick={saveText}>Save Text</button>
   <p>
@@ -54,5 +54,5 @@ const saveText = () => {
   </ol>
   </p>
 
-</div>
+</>
 }
