@@ -12,7 +12,10 @@ export default function MyEditor() {
   React.useEffect(() => hanzi.start(), [])
 
 const selectedText = getSelectionText(editorState)?.trim()
-const {character, components1, components2 } = hanzi.decompose(selectedText)
+const decomposeData = hanzi.decompose(selectedText)
+const character = decomposeData.character
+const basicComponents = decomposeData?.components1 ?? []
+const radicalComponents = decomposeData?.components2 ?? []
 // filter out random duplicates
 const definitionsData = (hanzi.definitionLookup(selectedText)?.slice(0, 3) ?? []).reduce((acc, current) => {
   if (!acc.some(x => x?.definition === current?.definition)) {
@@ -22,21 +25,27 @@ const definitionsData = (hanzi.definitionLookup(selectedText)?.slice(0, 3) ?? []
 }, [])
 const simplified = definitionsData?.[0]?.simplified
 const traditional = definitionsData?.[0]?.traditional
-const decomp1 = components1?.map(component => `${component}(${hanzi.getRadicalMeaning(component)})`).join(', ')
-const decomp2 = components2?.map(component => `${component}(${hanzi.getRadicalMeaning(component)})`).join(', ')
 
   return <div >
   <Editor placeholder="Paste Chinese text" editorState={editorState} onChange={setEditorState} />
   <p>
-  <h2>Character: {character} {traditional != null && traditional !== simplified && `(${traditional})`}</h2>
-  <h2>Pinyin & Meaning</h2>
+  <h3>Character: {character} {traditional != null && traditional !== simplified && `(${traditional})`}</h3>
+  <h3>Pinyin & Meaning</h3>
   <ol>
   {definitionsData.map((definitionData, idx) => {
     return <li key={idx}>{definitionData?.pinyin} - {definitionData?.definition}</li>
   })}
   </ol>
-  <h2>Basic: {decomp1}</h2>
-  <h2>Radicals: {decomp2}</h2>
+  <h3>Basic: {basicComponents.map((component, idx) => {
+    return <><span key={idx} className="red">{component}</span>({hanzi.getRadicalMeaning(component)}), </>
+  }
+  )}
+  </h3>
+    <h3>Radicals: {radicalComponents.map((component, idx) => {
+    return <><span key={idx} className="red">{component}</span>({hanzi.getRadicalMeaning(component)}){idx != radicalComponents.length  - 1 && ', '}</>
+  }
+  )}
+  </h3>
   </p>
 
 </div>
