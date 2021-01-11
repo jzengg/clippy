@@ -15,8 +15,8 @@ export default function MyEditor() {
 const selectedText = getSelectionText(editorState)?.trim()
 const decomposeData = hanzi.decompose(selectedText)
 const character = decomposeData.character
-const basicComponents = decomposeData?.components1 ?? []
-const radicalComponents = decomposeData?.components2 ?? []
+const basicComponents = (decomposeData?.components1 ?? []).filter(component  => component !== 'No glyph available')
+const radicalComponents = (decomposeData?.components2 ?? []).filter(component  => component !== 'No glyph available')
 // filter out random duplicates
 const definitionsData = (hanzi.definitionLookup(selectedText)?.slice(0, 3) ?? []).reduce((acc, current) => {
   if (!acc.some(x => x?.definition === current?.definition)) {
