@@ -37,12 +37,14 @@ const saveText = () => {
   <p>
   <h3>Character: {character} {traditional != null && traditional !== simplified && `(${traditional})`}</h3>
   <h3>Basic: {basicComponents.map((component, idx) => {
-    return <><span key={idx} className="red">{component}</span>({hanzi.getRadicalMeaning(component)}), </>
+    const meaning =hanzi.getRadicalMeaning(component)
+    return <><span key={idx} className="red">{component}</span>{meaning != 'N/A' && `(${meaning})`}{idx != radicalComponents.length  - 1 && ', '}</>
   }
   )}
   </h3>
     <h3>Radicals: {radicalComponents.map((component, idx) => {
-    return <><span key={idx} className="red">{component}</span>({hanzi.getRadicalMeaning(component)}){idx != radicalComponents.length  - 1 && ', '}</>
+      const meaning =hanzi.getRadicalMeaning(component)
+    return <><span key={idx} className="red">{component}</span>{meaning != 'N/A' && `(${meaning})`}{idx != radicalComponents.length  - 1 && ', '}</>
   }
   )}
   </h3>
