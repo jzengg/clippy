@@ -7,7 +7,7 @@ import { getSelectionText } from "draftjs-utils";
 
 const STORAGE_KEY = "clippySavedEditorState";
 
-export default function MyEditor() {
+export default function ChineseEditor() {
   const savedEditorState = localStorage.getItem(STORAGE_KEY);
   const defaultEditorState =
     savedEditorState != null
