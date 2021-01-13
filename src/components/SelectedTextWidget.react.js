@@ -5,7 +5,7 @@ import ExampleWordList from "./ExampleWordList.react";
 import ComponentList from "./ComponentList.react";
 import DefinitionList from "./DefinitionList.react";
 
-function SelectedTextWidget({ selectedText }) {
+function SelectedTextWidget({ selectedText, handleSaveCharacter }) {
   const decomposeData = hanzi.decompose(selectedText);
   const character = decomposeData.character;
   const basicComponents = (decomposeData?.components1 ?? []).filter(
@@ -41,6 +41,9 @@ function SelectedTextWidget({ selectedText }) {
           traditional !== simplified &&
           `(${traditional})`}
       </h3>
+      <button onClick={() => handleSaveCharacter(character)}>
+        Save Character
+      </button>
       <h3>
         Basic <ComponentList components={basicComponents} />
       </h3>
@@ -60,6 +63,7 @@ function SelectedTextWidget({ selectedText }) {
 
 SelectedTextWidget.propTypes = {
   selectedText: PropTypes.string,
+  handleSaveCharacter: PropTypes.func.isRequired,
 };
 
 export default SelectedTextWidget;

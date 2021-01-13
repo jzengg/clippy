@@ -1,13 +1,16 @@
 import React from "react";
 import { Editor, EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import hanzi from "hanzi";
-import SelectedTextWidget from "./SelectedTextWidget.react";
 import "draft-js/dist/Draft.css";
 import { getSelectionText } from "draftjs-utils";
+import SelectedTextWidget from "./SelectedTextWidget.react";
+import SavedCharacterList from "./SavedCharacterList.react";
 
 const STORAGE_KEY = "clippySavedEditorState";
 
 export default function ChineseEditor() {
+  React.useEffect(() => hanzi.start(), []);
+
   const savedEditorState = localStorage.getItem(STORAGE_KEY);
   const defaultEditorState =
     savedEditorState != null
@@ -16,7 +19,7 @@ export default function ChineseEditor() {
         )
       : EditorState.createEmpty();
   const [editorState, setEditorState] = React.useState(defaultEditorState);
-  React.useEffect(() => hanzi.start(), []);
+  const [savedCharacters, setSavedCharacters] = React.useState([]);
 
   const selectedText = getSelectionText(editorState)?.trim();
   const isCharacterSelected = selectedText != null && selectedText != "";
@@ -28,6 +31,14 @@ export default function ChineseEditor() {
     );
   };
 
+  const addSavedCharacter = (char) =>
+    setSavedCharacters([...savedCharacters, char]);
+
+  const removeSavedCharacter = (indexToRemove) =>
+    setSavedCharacters(
+      savedCharacters.filter((char, idx) => idx !== indexToRemove)
+    );
+
   return (
     <>
       <Editor
@@ -36,8 +47,15 @@ export default function ChineseEditor() {
         onChange={setEditorState}
       />
       <button onClick={saveText}>Save Text</button>
+      <SavedCharacterList
+        handleRemove={removeSavedCharacter}
+        characters={savedCharacters}
+      />
       {isCharacterSelected && (
-        <SelectedTextWidget selectedText={selectedText} />
+        <SelectedTextWidget
+          handleSaveCharacter={addSavedCharacter}
+          selectedText={selectedText}
+        />
       )}
     </>
   );
