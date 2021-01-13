@@ -1,24 +1,33 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function SavedCharacterList({ characters, handleRemove }) {
+function SavedCharacterList({ charactersData, handleRemove, handleExport }) {
   return (
-    <ul>
-      {characters.map((character, idx) => {
-        return (
-          <li key={idx}>
-            {character}
-            <button onClick={() => handleRemove(idx)}>X</button>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      <h3>Saved Characters</h3>
+      <ul>
+        {charactersData.map(({ character }, idx) => {
+          return (
+            <li key={idx}>
+              {character}
+              <button onClick={() => handleRemove(idx)}>X</button>
+            </li>
+          );
+        })}
+      </ul>
+      <button onClick={handleExport}>Export as CSV</button>
+    </>
   );
 }
 
 SavedCharacterList.propTypes = {
-  characters: PropTypes.arrayOf(PropTypes.string),
+  charactersData: PropTypes.arrayOf(
+    PropTypes.shape({
+      character: PropTypes.string,
+    })
+  ),
   handleRemove: PropTypes.func.isRequired,
+  handleExport: PropTypes.func.isRequired,
 };
 
 export default SavedCharacterList;

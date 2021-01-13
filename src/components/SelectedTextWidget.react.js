@@ -41,7 +41,7 @@ function SelectedTextWidget({ selectedText, handleSaveCharacter }) {
           traditional !== simplified &&
           `(${traditional})`}
       </h3>
-      <button onClick={() => handleSaveCharacter(character)}>
+      <button onClick={() => handleSaveCharacter({ character })}>
         Save Character
       </button>
       <h3>
