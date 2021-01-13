@@ -6,33 +6,48 @@ import { getSelectionText } from "draftjs-utils";
 import SelectedTextWidget from "./SelectedTextWidget.react";
 import SavedCharacterList from "./SavedCharacterList.react";
 
-const STORAGE_KEY = "clippySavedEditorState";
+const SAVED_EDITOR_STATE_KEY = "clippySavedEditorState";
+const SAVED_CHARACTERS_DATA_KEY = "clippySavedCharactersData";
 
 export default function ChineseEditor() {
   React.useEffect(() => hanzi.start(), []);
 
-  const savedEditorState = localStorage.getItem(STORAGE_KEY);
-  const defaultEditorState =
-    savedEditorState != null
-      ? EditorState.createWithContent(
-          convertFromRaw(JSON.parse(savedEditorState))
-        )
-      : EditorState.createEmpty();
-  const [editorState, setEditorState] = React.useState(defaultEditorState);
-  const [savedCharactersData, setSavedCharactersData] = React.useState([]);
+  const [editorState, setEditorState] = React.useState(() => {
+    const savedEditorState = localStorage.getItem(SAVED_EDITOR_STATE_KEY);
+    const defaultEditorState =
+      savedEditorState != null
+        ? EditorState.createWithContent(
+            convertFromRaw(JSON.parse(savedEditorState))
+          )
+        : EditorState.createEmpty();
+    return defaultEditorState;
+  });
+  const [savedCharactersData, setSavedCharactersData] = React.useState(() => {
+    const persistedSavedCharactersData = localStorage.getItem(
+      SAVED_CHARACTERS_DATA_KEY
+    );
+    const defaultSavedCharactersData =
+      persistedSavedCharactersData != null
+        ? JSON.parse(persistedSavedCharactersData)
+        : [];
+    return defaultSavedCharactersData;
+  });
 
   const selectedText = getSelectionText(editorState)?.trim();
   const isCharacterSelected = selectedText != null && selectedText != "";
 
   const saveText = () => {
     localStorage.setItem(
-      STORAGE_KEY,
+      SAVED_EDITOR_STATE_KEY,
       JSON.stringify(convertToRaw(editorState.getCurrentContent()))
     );
   };
 
-  const addSavedCharacter = (characterData) =>
-    setSavedCharactersData([...savedCharactersData, { ...characterData }]);
+  const addSavedCharacter = (characterData) => {
+    const newState = [...savedCharactersData, { ...characterData }];
+    localStorage.setItem(SAVED_CHARACTERS_DATA_KEY, JSON.stringify(newState));
+    setSavedCharactersData(newState);
+  };
 
   const removeSavedCharacter = (indexToRemove) =>
     setSavedCharactersData(

@@ -46,13 +46,16 @@ function SelectedTextWidget({ selectedText, handleSaveCharacter }) {
       <button
         onClick={() =>
           handleSaveCharacter({
-            simplified,
-            traditional,
             definitionData: definitionsData?.[selectedDefinitionIdx],
-            basicComponents,
-            radicalComponents,
-            highFreqExamples,
-            mediumFreqExamples,
+            basicComponents: basicComponents.map((component) => ({
+              component,
+              meaning: hanzi.getRadicalMeaning(component),
+            })),
+            radicalComponents: radicalComponents.map((component) => ({
+              component,
+              meaning: hanzi.getRadicalMeaning(component),
+            })),
+            examples: [...highFreqExamples, ...mediumFreqExamples],
           })
         }
       >

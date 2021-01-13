@@ -6,7 +6,7 @@ function SavedCharacterList({ charactersData, handleRemove, handleExport }) {
     <>
       <h3>Saved Characters</h3>
       <ul>
-        {charactersData.map(({ simplified }, idx) => {
+        {charactersData.map(({ definitionData: { simplified } }, idx) => {
           return (
             <li key={idx}>
               {simplified}
@@ -23,8 +23,6 @@ function SavedCharacterList({ charactersData, handleRemove, handleExport }) {
 SavedCharacterList.propTypes = {
   charactersData: PropTypes.arrayOf(
     PropTypes.shape({
-      simplified: PropTypes.string,
-      traditional: PropTypes.string,
       definitionData: PropTypes.shape({
         definition: PropTypes.string,
         pinyin: PropTypes.string,
