@@ -6,6 +6,7 @@ import ComponentList from "./ComponentList.react";
 import DefinitionList from "./DefinitionList.react";
 
 function SelectedTextWidget({ selectedText, handleSaveCharacter }) {
+  const [selectedDefinitionIdx, setSelectedDefinitionIdx] = React.useState(0);
   const decomposeData = hanzi.decompose(selectedText);
   const character = decomposeData.character;
   const basicComponents = (decomposeData?.components1 ?? []).filter(
@@ -23,6 +24,7 @@ function SelectedTextWidget({ selectedText, handleSaveCharacter }) {
     }
     return acc;
   }, []);
+
   // show high frequency examples with their pinyin and meaning?
   // update layout so we can show list of chars to save, should be backed up to local storage until cleared?
   // have a list of characters to save. button to export to csv. ui to select export format? checkboxes to select which columns to export?
@@ -41,7 +43,19 @@ function SelectedTextWidget({ selectedText, handleSaveCharacter }) {
           traditional !== simplified &&
           `(${traditional})`}
       </h3>
-      <button onClick={() => handleSaveCharacter({ character })}>
+      <button
+        onClick={() =>
+          handleSaveCharacter({
+            simplified,
+            traditional,
+            definitionData: definitionsData?.[selectedDefinitionIdx],
+            basicComponents,
+            radicalComponents,
+            highFreqExamples,
+            mediumFreqExamples,
+          })
+        }
+      >
         Save Character
       </button>
       <h3>
@@ -51,7 +65,11 @@ function SelectedTextWidget({ selectedText, handleSaveCharacter }) {
         Radicals <ComponentList components={radicalComponents} />
       </h3>
       <h3>Pinyin & Meaning</h3>
-      <DefinitionList definitions={definitionsData} />
+      <DefinitionList
+        selectedDefinitionIdx={selectedDefinitionIdx}
+        handleSelectDefinition={setSelectedDefinitionIdx}
+        definitions={definitionsData}
+      />
       <h3>Example Words</h3>
       <h4>High Frequency</h4>
       <ExampleWordList examples={highFreqExamples} />

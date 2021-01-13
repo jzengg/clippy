@@ -19,7 +19,7 @@ export default function ChineseEditor() {
         )
       : EditorState.createEmpty();
   const [editorState, setEditorState] = React.useState(defaultEditorState);
-  const [savedCharacters, setSavedCharacters] = React.useState([]);
+  const [savedCharactersData, setSavedCharactersData] = React.useState([]);
 
   const selectedText = getSelectionText(editorState)?.trim();
   const isCharacterSelected = selectedText != null && selectedText != "";
@@ -32,18 +32,19 @@ export default function ChineseEditor() {
   };
 
   const addSavedCharacter = (characterData) =>
-    setSavedCharacters([...savedCharacters, { ...characterData }]);
+    setSavedCharactersData([...savedCharactersData, { ...characterData }]);
 
   const removeSavedCharacter = (indexToRemove) =>
-    setSavedCharacters(
-      savedCharacters.filter((char, idx) => idx !== indexToRemove)
+    setSavedCharactersData(
+      savedCharactersData.filter((char, idx) => idx !== indexToRemove)
     );
   const exportSavedCharactersToCSV = () => {
-    console.log("exporting", savedCharacters);
+    console.log(savedCharactersData);
+    console.log("exporting", savedCharactersData);
     // should have inputs for choosing definition / meaning to export.
     // need to store all that in state and not just the character to make sure the right
     // data is exported / saved
-    return savedCharacters.map((savedCharacter) => {
+    return savedCharactersData.map((savedCharacter) => {
       return [savedCharacter];
     });
   };
@@ -59,7 +60,7 @@ export default function ChineseEditor() {
       <SavedCharacterList
         handleExport={exportSavedCharactersToCSV}
         handleRemove={removeSavedCharacter}
-        charactersData={savedCharacters}
+        charactersData={savedCharactersData}
       />
       {isCharacterSelected && (
         <SelectedTextWidget

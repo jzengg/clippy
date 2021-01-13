@@ -1,13 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function DefinitionList({ definitions }) {
+function DefinitionList({
+  definitions,
+  selectedDefinitionIdx,
+  handleSelectDefinition,
+}) {
   return (
     <ol>
       {definitions.map((definitionData, idx) => {
         return (
-          <li key={idx}>
+          <li onClick={() => handleSelectDefinition(idx)} key={idx}>
             {definitionData.pinyin} - {definitionData.definition}
+            {selectedDefinitionIdx === idx && " Selected"}
           </li>
         );
       })}
@@ -22,6 +27,8 @@ DefinitionList.propTypes = {
       pinyin: PropTypes.string,
     })
   ),
+  handleSelectDefinition: PropTypes.func.isRequired,
+  selectedDefinitionIdx: PropTypes.number,
 };
 
 export default DefinitionList;

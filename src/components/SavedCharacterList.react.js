@@ -6,10 +6,10 @@ function SavedCharacterList({ charactersData, handleRemove, handleExport }) {
     <>
       <h3>Saved Characters</h3>
       <ul>
-        {charactersData.map(({ character }, idx) => {
+        {charactersData.map(({ simplified }, idx) => {
           return (
             <li key={idx}>
-              {character}
+              {simplified}
               <button onClick={() => handleRemove(idx)}>X</button>
             </li>
           );
@@ -23,7 +23,26 @@ function SavedCharacterList({ charactersData, handleRemove, handleExport }) {
 SavedCharacterList.propTypes = {
   charactersData: PropTypes.arrayOf(
     PropTypes.shape({
-      character: PropTypes.string,
+      simplified: PropTypes.string,
+      traditional: PropTypes.string,
+      definitionData: PropTypes.shape({
+        definition: PropTypes.string,
+        pinyin: PropTypes.string,
+        simplified: PropTypes.string,
+        traditional: PropTypes.string,
+      }),
+      basicComponents: PropTypes.arrayOf(
+        PropTypes.shape({
+          component: PropTypes.string,
+          meaning: PropTypes.string,
+        })
+      ),
+      radicalComponents: PropTypes.arrayOf(
+        PropTypes.shape({
+          component: PropTypes.string,
+          meaning: PropTypes.string,
+        })
+      ),
     })
   ),
   handleRemove: PropTypes.func.isRequired,
