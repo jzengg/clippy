@@ -1,60 +1,44 @@
-import React from 'react';
-import {Editor, EditorState, ContentState, convertToRaw, convertFromRaw} from 'draft-js';
-import hanzi from 'hanzi'
-import 'draft-js/dist/Draft.css';
-import {getSelectionText} from 'draftjs-utils'
+import React from "react";
+import { Editor, EditorState, convertToRaw, convertFromRaw } from "draft-js";
+import hanzi from "hanzi";
+import SelectedTextWidget from "./SelectedTextWidget.react";
+import "draft-js/dist/Draft.css";
+import { getSelectionText } from "draftjs-utils";
 
-const STORAGE_KEY = 'clippySavedEditorState'
+const STORAGE_KEY = "clippySavedEditorState";
 
 export default function MyEditor() {
-  const savedEditorState = localStorage.getItem(STORAGE_KEY)
-  const defaultEditorState = savedEditorState != null ? EditorState.createWithContent(convertFromRaw(JSON.parse(savedEditorState))) : EditorState.createEmpty()
+  const savedEditorState = localStorage.getItem(STORAGE_KEY);
+  const defaultEditorState =
+    savedEditorState != null
+      ? EditorState.createWithContent(
+          convertFromRaw(JSON.parse(savedEditorState))
+        )
+      : EditorState.createEmpty();
   const [editorState, setEditorState] = React.useState(defaultEditorState);
-  React.useEffect(() => hanzi.start(), [])
+  React.useEffect(() => hanzi.start(), []);
 
-const selectedText = getSelectionText(editorState)?.trim()
-const decomposeData = hanzi.decompose(selectedText)
-const character = decomposeData.character
-const basicComponents = (decomposeData?.components1 ?? []).filter(component  => component !== 'No glyph available')
-const radicalComponents = (decomposeData?.components2 ?? []).filter(component  => component !== 'No glyph available')
-// filter out random duplicates
-const definitionsData = (hanzi.definitionLookup(selectedText)?.slice(0, 3) ?? []).reduce((acc, current) => {
-  if (!acc.some(x => x?.definition === current?.definition)) {
-    acc.push(current)
-  }
-  return acc
-}, [])
-const simplified = definitionsData?.[0]?.simplified
-const traditional = definitionsData?.[0]?.traditional
+  const selectedText = getSelectionText(editorState)?.trim();
+  const isCharacterSelected = selectedText != null && selectedText != "";
 
-const saveText = () => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(convertToRaw(editorState.getCurrentContent())))
-}
+  const saveText = () => {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+    );
+  };
 
-  return <>
-  <Editor placeholder="Paste Chinese text" editorState={editorState} onChange={setEditorState} />
-  <button onClick={saveText}>Save Text</button>
-  <p>
-  <h3>Character: {character} {traditional != null && traditional !== simplified && `(${traditional})`}</h3>
-  <h3>Basic: {basicComponents.map((component, idx) => {
-    const meaning =hanzi.getRadicalMeaning(component)
-    return <><span key={idx} className="red">{component}</span>{meaning != 'N/A' && `(${meaning})`}{idx != radicalComponents.length  - 1 && ', '}</>
-  }
-  )}
-  </h3>
-    <h3>Radicals: {radicalComponents.map((component, idx) => {
-      const meaning =hanzi.getRadicalMeaning(component)
-    return <><span key={idx} className="red">{component}</span>{meaning != 'N/A' && `(${meaning})`}{idx != radicalComponents.length  - 1 && ', '}</>
-  }
-  )}
-  </h3>
-  <h3>Pinyin & Meaning</h3>
-  <ol>
-  {definitionsData.map((definitionData, idx) => {
-    return <li key={idx}>{definitionData?.pinyin} - {definitionData?.definition}</li>
-  })}
-  </ol>
-  </p>
-
-</>
+  return (
+    <>
+      <Editor
+        placeholder="Paste Chinese text"
+        editorState={editorState}
+        onChange={setEditorState}
+      />
+      <button onClick={saveText}>Save Text</button>
+      {isCharacterSelected && (
+        <SelectedTextWidget selectedText={selectedText} />
+      )}
+    </>
+  );
 }
