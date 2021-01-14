@@ -15,10 +15,10 @@ function DefinitionList({
   return (
     <ol>
       {definitions.map((definitionData, idx) => {
+        const content = `${definitionData.pinyin} - ${definitionData.definition}`;
         return (
           <li onClick={() => handleSelectDefinition(idx)} key={idx}>
-            {definitionData.pinyin} - {definitionData.definition}
-            {selectedDefinitionIdx === idx && " Selected"}
+            {selectedDefinitionIdx === idx ? <b>{content}</b> : content}
           </li>
         );
       })}

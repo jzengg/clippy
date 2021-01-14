@@ -1,6 +1,5 @@
 import React from "react";
 import { Editor, EditorState, convertToRaw, convertFromRaw } from "draft-js";
-import hanzi from "hanzi";
 import "draft-js/dist/Draft.css";
 import { getSelectionText } from "draftjs-utils";
 import { ChineseCharacterData } from "../types/interfaces";
@@ -11,8 +10,6 @@ const SAVED_EDITOR_STATE_KEY = "clippySavedEditorState";
 const SAVED_CHARACTERS_DATA_KEY = "clippySavedCharactersData";
 
 export default function ChineseEditor() {
-  React.useEffect(() => hanzi.start(), []);
-
   const [editorState, setEditorState] = React.useState(() => {
     const savedEditorState = localStorage.getItem(SAVED_EDITOR_STATE_KEY);
     const defaultEditorState =

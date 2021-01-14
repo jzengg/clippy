@@ -80,18 +80,18 @@ function SelectedTextWidget({ selectedText, handleSaveCharacter }: Props) {
       >
         Save Character
       </button>
-      <h3>
-        Basic <ComponentList components={basicComponents} />
-      </h3>
-      <h3>
-        Radicals <ComponentList components={radicalComponents} />
-      </h3>
       <h3>Pinyin & Meaning</h3>
       <DefinitionList
         selectedDefinitionIdx={selectedDefinitionIdx}
         handleSelectDefinition={setSelectedDefinitionIdx}
         definitions={definitionsData}
       />
+      <h3>
+        Basic <ComponentList components={basicComponents} />
+      </h3>
+      <h3>
+        Radicals <ComponentList components={radicalComponents} />
+      </h3>
       <h3>Example Words</h3>
       <h4>High Frequency</h4>
       <ExampleWordList examples={highFreqExamples} />
