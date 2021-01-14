@@ -4,6 +4,7 @@ import hanzi from "hanzi";
 import ExampleWordList from "./ExampleWordList.react";
 import ComponentList from "./ComponentList.react";
 import DefinitionList from "./DefinitionList.react";
+import CharacterWithVariation from "./CharacterWithVariation.react";
 
 function SelectedTextWidget({ selectedText, handleSaveCharacter }) {
   const [selectedDefinitionIdx, setSelectedDefinitionIdx] = React.useState(0);
@@ -38,14 +39,17 @@ function SelectedTextWidget({ selectedText, handleSaveCharacter }) {
   return (
     <>
       <h3>
-        Character: {character}
-        {traditional != null &&
-          traditional !== simplified &&
-          `(${traditional})`}
+        Character:{" "}
+        <CharacterWithVariation
+          simplified={simplified}
+          traditional={traditional}
+        />
       </h3>
       <button
         onClick={() =>
           handleSaveCharacter({
+            simplified,
+            traditional,
             definitionData: definitionsData?.[selectedDefinitionIdx],
             basicComponents: basicComponents.map((component) => ({
               component,

@@ -1,15 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import CharacterWithVariation from "./CharacterWithVariation.react";
+
 function ExampleWordList({ examples }) {
   return (
     <ol>
       {examples.map((example, idx) => {
         return (
           <li key={idx}>
-            {example.simplified}
-            {example.simplified != example.traditional &&
-              `(${example.traditional})`}{" "}
+            <CharacterWithVariation
+              simplified={example.simplified}
+              traditional={example.traditional}
+            />{" "}
             {example.pinyin} - {example.definition}
           </li>
         );

@@ -1,15 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import CharacterWithVariation from "./CharacterWithVariation.react";
+
 function SavedCharacterList({ charactersData, handleRemove, handleExport }) {
   return (
     <>
       <h3>Saved Characters</h3>
       <ul>
-        {charactersData.map(({ definitionData: { simplified } }, idx) => {
+        {charactersData.map(({ simplified, traditional }, idx) => {
           return (
             <li key={idx}>
-              {simplified}
+              <CharacterWithVariation
+                simplified={simplified}
+                traditional={traditional}
+              />
               <button onClick={() => handleRemove(idx)}>X</button>
             </li>
           );
@@ -23,6 +28,8 @@ function SavedCharacterList({ charactersData, handleRemove, handleExport }) {
 SavedCharacterList.propTypes = {
   charactersData: PropTypes.arrayOf(
     PropTypes.shape({
+      simplified: PropTypes.string,
+      traditional: PropTypes.string,
       definitionData: PropTypes.shape({
         definition: PropTypes.string,
         pinyin: PropTypes.string,
