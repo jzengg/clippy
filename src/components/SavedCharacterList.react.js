@@ -80,10 +80,13 @@ function SavedCharacterList({ charactersData, handleRemove }) {
         })}
       </ul>
       {charactersData != null && charactersData.length > 0 && (
-        <button onClick={prepareDownload}>Export as CSV</button>
+        <button onClick={prepareDownload}>Get Download Link</button>
       )}
       {exportData != null && (
-        <a href={getDownloadURL(exportData)} download={"clippy.csv"}>
+        <a
+          href={getDownloadURL(exportData)}
+          download={`clippy_export_${new Date().getTime()}.csv`}
+        >
           Download
         </a>
       )}
