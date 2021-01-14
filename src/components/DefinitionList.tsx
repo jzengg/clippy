@@ -1,11 +1,17 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { DefinitionData } from "../types/interfaces";
+
+type Props = {
+  definitions: DefinitionData[];
+  handleSelectDefinition: (idx: number) => void;
+  selectedDefinitionIdx: number;
+};
 
 function DefinitionList({
   definitions,
   selectedDefinitionIdx,
   handleSelectDefinition,
-}) {
+}: Props) {
   return (
     <ol>
       {definitions.map((definitionData, idx) => {
@@ -19,16 +25,5 @@ function DefinitionList({
     </ol>
   );
 }
-
-DefinitionList.propTypes = {
-  definitions: PropTypes.arrayOf(
-    PropTypes.shape({
-      definition: PropTypes.string,
-      pinyin: PropTypes.string,
-    })
-  ),
-  handleSelectDefinition: PropTypes.func.isRequired,
-  selectedDefinitionIdx: PropTypes.number,
-};
 
 export default DefinitionList;

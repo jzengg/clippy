@@ -3,8 +3,9 @@ import { Editor, EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import hanzi from "hanzi";
 import "draft-js/dist/Draft.css";
 import { getSelectionText } from "draftjs-utils";
-import SelectedTextWidget from "./SelectedTextWidget.react";
-import SavedCharacterList from "./SavedCharacterList.react";
+import { CharacterData } from "../types/interfaces";
+import SelectedTextWidget from "./SelectedTextWidget";
+import SavedCharacterList from "./SavedCharacterList";
 
 const SAVED_EDITOR_STATE_KEY = "clippySavedEditorState";
 const SAVED_CHARACTERS_DATA_KEY = "clippySavedCharactersData";
@@ -22,7 +23,9 @@ export default function ChineseEditor() {
         : EditorState.createEmpty();
     return defaultEditorState;
   });
-  const [savedCharactersData, setSavedCharactersData] = React.useState(() => {
+  const [savedCharactersData, setSavedCharactersData] = React.useState<
+    CharacterData[]
+  >(() => {
     const persistedSavedCharactersData = localStorage.getItem(
       SAVED_CHARACTERS_DATA_KEY
     );
@@ -43,16 +46,17 @@ export default function ChineseEditor() {
     );
   };
 
-  const addSavedCharacter = (characterData) => {
+  function addSavedCharacter(characterData: CharacterData) {
     const newState = [...savedCharactersData, { ...characterData }];
     localStorage.setItem(SAVED_CHARACTERS_DATA_KEY, JSON.stringify(newState));
     setSavedCharactersData(newState);
-  };
+  }
 
-  const removeSavedCharacter = (indexToRemove) =>
-    setSavedCharactersData(
-      savedCharactersData.filter((char, idx) => idx !== indexToRemove)
+  function removeSavedCharacter(indexToRemove: number) {
+    return setSavedCharactersData(
+      savedCharactersData.filter((_char, idx) => idx !== indexToRemove)
     );
+  }
 
   return (
     <>

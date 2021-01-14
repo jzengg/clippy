@@ -1,29 +1,37 @@
 import React from "react";
-import PropTypes from "prop-types";
+import {
+  CharacterData,
+  ComponentData,
+  DefinitionData,
+} from "../types/interfaces";
 
-import CharacterWithVariation from "./CharacterWithVariation.react";
+import CharacterWithVariation from "./CharacterWithVariation";
 
-function SavedCharacterList({ charactersData, handleRemove }) {
-  const [exportData, setExportData] = React.useState(null);
+type Props = {
+  charactersData: CharacterData[];
+  handleRemove: (idx: number) => void;
+};
 
-  const prepareDownload = () => {
+function SavedCharacterList({ charactersData, handleRemove }: Props) {
+  const [exportData, setExportData] = React.useState<string | null>(null);
+
+  function prepareDownload() {
     setExportData(exportSavedCharactersToCSV());
-  };
-  const getDownloadURL = () => {
-    const blob = new Blob([exportData], { type: "text/csv;charset=utf-8;" });
+  }
+  function getDownloadURL(data: string) {
+    const blob = new Blob([data], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     return url;
-  };
-
-  const getComponentsText = (components) => {
+  }
+  function getComponentsText(components: ComponentData[]) {
     return components
       .map(
         ({ component, meaning }) =>
           `${component}${meaning != null && meaning != "" && ` (${meaning})`}`
       )
       .join("; ");
-  };
-  const getExampleTexts = (examples) => {
+  }
+  function getExampleTexts(examples: DefinitionData[]) {
     return examples
       .slice(0, 3)
       .map(
@@ -34,9 +42,9 @@ function SavedCharacterList({ charactersData, handleRemove }) {
               : ""
           } ${pinyin} - ${definition}`
       );
-  };
+  }
 
-  const exportSavedCharactersToCSV = () => {
+  function exportSavedCharactersToCSV() {
     const csv = charactersData.map(
       ({
         simplified,
@@ -61,7 +69,7 @@ function SavedCharacterList({ charactersData, handleRemove }) {
       }
     );
     return csv.join("\n");
-  };
+  }
 
   return (
     <>
@@ -93,41 +101,5 @@ function SavedCharacterList({ charactersData, handleRemove }) {
     </>
   );
 }
-
-SavedCharacterList.propTypes = {
-  charactersData: PropTypes.arrayOf(
-    PropTypes.shape({
-      simplified: PropTypes.string,
-      traditional: PropTypes.string,
-      definitionData: PropTypes.shape({
-        definition: PropTypes.string,
-        pinyin: PropTypes.string,
-        simplified: PropTypes.string,
-        traditional: PropTypes.string,
-      }),
-      basicComponents: PropTypes.arrayOf(
-        PropTypes.shape({
-          component: PropTypes.string,
-          meaning: PropTypes.string,
-        })
-      ),
-      radicalComponents: PropTypes.arrayOf(
-        PropTypes.shape({
-          component: PropTypes.string,
-          meaning: PropTypes.string,
-        })
-      ),
-      examples: PropTypes.arrayOf(
-        PropTypes.shape({
-          traditional: PropTypes.string,
-          simplified: PropTypes.string,
-          pinyin: PropTypes.string,
-          definition: PropTypes.string,
-        })
-      ),
-    })
-  ),
-  handleRemove: PropTypes.func.isRequired,
-};
 
 export default SavedCharacterList;

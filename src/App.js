@@ -1,5 +1,5 @@
 import "./App.css";
-import ChineseEditor from "./components/ChineseEditor.js";
+import ChineseEditor from "./components/ChineseEditor";
 import React from "react";
 
 function App() {

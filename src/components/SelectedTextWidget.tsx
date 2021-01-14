@@ -1,14 +1,25 @@
 import React from "react";
-import PropTypes from "prop-types";
-import hanzi from "hanzi";
-import ExampleWordList from "./ExampleWordList.react";
-import ComponentList from "./ComponentList.react";
-import DefinitionList from "./DefinitionList.react";
-import CharacterWithVariation from "./CharacterWithVariation.react";
 
-function SelectedTextWidget({ selectedText, handleSaveCharacter }) {
+import ExampleWordList from "./ExampleWordList";
+import ComponentList from "./ComponentList";
+import DefinitionList from "./DefinitionList";
+import CharacterWithVariation from "./CharacterWithVariation";
+import { DefinitionData, CharacterData } from "../types/interfaces";
+import {
+  decomposeCharacter,
+  definitionLookup,
+  getExampleUsages,
+  getRadicalMeaning,
+} from "../lib/hanziwrapper";
+
+type Props = {
+  selectedText: string;
+  handleSaveCharacter: (char: CharacterData) => void;
+};
+
+function SelectedTextWidget({ selectedText, handleSaveCharacter }: Props) {
   const [selectedDefinitionIdx, setSelectedDefinitionIdx] = React.useState(0);
-  const decomposeData = hanzi.decompose(selectedText);
+  const decomposeData = decomposeCharacter(selectedText);
   const character = decomposeData.character;
   const basicComponents = (decomposeData?.components1 ?? []).filter(
     (component) => component !== "No glyph available"
@@ -17,25 +28,29 @@ function SelectedTextWidget({ selectedText, handleSaveCharacter }) {
     (component) => component !== "No glyph available"
   );
   // filter out random duplicates
-  const definitionsData = (
-    hanzi.definitionLookup(selectedText)?.slice(0, 10) ?? []
-  ).reduce((acc, current) => {
-    if (!acc.some((x) => x?.definition === current?.definition)) {
-      acc.push(current);
+  const rawDefinitionsData = definitionLookup(selectedText) || [];
+  const definitionsData: DefinitionData[] = [];
+  const seenDefinitions = new Set();
+  rawDefinitionsData.slice(0, 10).forEach((definitionData) => {
+    if (!seenDefinitions.has(definitionData.definition)) {
+      definitionsData.push(definitionData);
+    } else {
+      seenDefinitions.add(definitionData.definition);
     }
-    return acc;
-  }, []);
+  });
 
   // show high frequency examples with their pinyin and meaning?
   // update layout so we can show list of chars to save, should be backed up to local storage until cleared?
   // have a list of characters to save. button to export to csv. ui to select export format? checkboxes to select which columns to export?
   const simplified = definitionsData?.[0]?.simplified;
-  const traditional = definitionsData
-    .map((data) => data.traditional)
-    .find((char) => char != simplified);
-  const examples = hanzi.getExamples(character);
+  const traditional =
+    definitionsData
+      .map((data) => data.traditional)
+      .find((char) => char != simplified) ?? null;
+  const examples = getExampleUsages(character);
   const highFreqExamples = examples?.[0]?.slice(0, 3) ?? [];
   const mediumFreqExamples = examples?.[1]?.slice(0, 3) ?? [];
+
   return (
     <>
       <h3>
@@ -53,11 +68,11 @@ function SelectedTextWidget({ selectedText, handleSaveCharacter }) {
             definitionData: definitionsData?.[selectedDefinitionIdx],
             basicComponents: basicComponents.map((component) => ({
               component,
-              meaning: hanzi.getRadicalMeaning(component),
+              meaning: getRadicalMeaning(component),
             })),
             radicalComponents: radicalComponents.map((component) => ({
               component,
-              meaning: hanzi.getRadicalMeaning(component),
+              meaning: getRadicalMeaning(component),
             })),
             examples: [...highFreqExamples, ...mediumFreqExamples],
           })
@@ -85,10 +100,5 @@ function SelectedTextWidget({ selectedText, handleSaveCharacter }) {
     </>
   );
 }
-
-SelectedTextWidget.propTypes = {
-  selectedText: PropTypes.string,
-  handleSaveCharacter: PropTypes.func.isRequired,
-};
 
 export default SelectedTextWidget;

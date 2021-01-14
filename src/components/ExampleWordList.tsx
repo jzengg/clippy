@@ -1,9 +1,12 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { DefinitionData } from "../types/interfaces";
+import CharacterWithVariation from "./CharacterWithVariation";
 
-import CharacterWithVariation from "./CharacterWithVariation.react";
+type Props = {
+  examples: DefinitionData[];
+};
 
-function ExampleWordList({ examples }) {
+function ExampleWordList({ examples }: Props) {
   return (
     <ol>
       {examples.map((example, idx) => {
@@ -20,16 +23,5 @@ function ExampleWordList({ examples }) {
     </ol>
   );
 }
-
-ExampleWordList.propTypes = {
-  examples: PropTypes.arrayOf(
-    PropTypes.shape({
-      traditional: PropTypes.string,
-      simplified: PropTypes.string,
-      definition: PropTypes.string,
-      pinyin: PropTypes.string,
-    })
-  ),
-};
 
 export default ExampleWordList;

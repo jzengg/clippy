@@ -1,12 +1,15 @@
 import React from "react";
-import PropTypes from "prop-types";
-import hanzi from "hanzi";
+import { getRadicalMeaning } from "../lib/hanziwrapper";
 
-function ComponentList({ components }) {
+type Props = {
+  components: string[];
+};
+
+function ComponentList({ components }: Props) {
   return (
     <>
       {components.map((component, idx) => {
-        const meaning = hanzi.getRadicalMeaning(component);
+        const meaning = getRadicalMeaning(component);
         return (
           <React.Fragment key={idx}>
             <span className="red">{component}</span>
@@ -18,9 +21,5 @@ function ComponentList({ components }) {
     </>
   );
 }
-
-ComponentList.propTypes = {
-  components: PropTypes.arrayOf(PropTypes.string),
-};
 
 export default ComponentList;
