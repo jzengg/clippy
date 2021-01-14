@@ -53,16 +53,6 @@ export default function ChineseEditor() {
     setSavedCharactersData(
       savedCharactersData.filter((char, idx) => idx !== indexToRemove)
     );
-  const exportSavedCharactersToCSV = () => {
-    console.log(savedCharactersData);
-    console.log("exporting", savedCharactersData);
-    // should have inputs for choosing definition / meaning to export.
-    // need to store all that in state and not just the character to make sure the right
-    // data is exported / saved
-    return savedCharactersData.map((savedCharacter) => {
-      return [savedCharacter];
-    });
-  };
 
   return (
     <>
@@ -73,7 +63,6 @@ export default function ChineseEditor() {
       />
       <button onClick={saveText}>Save Text</button>
       <SavedCharacterList
-        handleExport={exportSavedCharactersToCSV}
         handleRemove={removeSavedCharacter}
         charactersData={savedCharactersData}
       />
