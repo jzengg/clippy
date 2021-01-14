@@ -4,7 +4,7 @@ import ExampleWordList from "./ExampleWordList";
 import ComponentList from "./ComponentList";
 import DefinitionList from "./DefinitionList";
 import CharacterWithVariation from "./CharacterWithVariation";
-import { DefinitionData, CharacterData } from "../types/interfaces";
+import { DefinitionData, ChineseCharacterData } from "../types/interfaces";
 import {
   decomposeCharacter,
   definitionLookup,
@@ -14,7 +14,7 @@ import {
 
 type Props = {
   selectedText: string;
-  handleSaveCharacter: (char: CharacterData) => void;
+  handleSaveCharacter: (char: ChineseCharacterData) => void;
 };
 
 function SelectedTextWidget({ selectedText, handleSaveCharacter }: Props) {

@@ -3,7 +3,7 @@ import { Editor, EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import hanzi from "hanzi";
 import "draft-js/dist/Draft.css";
 import { getSelectionText } from "draftjs-utils";
-import { CharacterData } from "../types/interfaces";
+import { ChineseCharacterData } from "../types/interfaces";
 import SelectedTextWidget from "./SelectedTextWidget";
 import SavedCharacterList from "./SavedCharacterList";
 
@@ -24,7 +24,7 @@ export default function ChineseEditor() {
     return defaultEditorState;
   });
   const [savedCharactersData, setSavedCharactersData] = React.useState<
-    CharacterData[]
+    ChineseCharacterData[]
   >(() => {
     const persistedSavedCharactersData = localStorage.getItem(
       SAVED_CHARACTERS_DATA_KEY
@@ -46,8 +46,8 @@ export default function ChineseEditor() {
     );
   };
 
-  function addSavedCharacter(characterData: CharacterData) {
-    const newState = [...savedCharactersData, { ...characterData }];
+  function addSavedCharacter(ChineseCharacterData: ChineseCharacterData) {
+    const newState = [...savedCharactersData, { ...ChineseCharacterData }];
     localStorage.setItem(SAVED_CHARACTERS_DATA_KEY, JSON.stringify(newState));
     setSavedCharactersData(newState);
   }

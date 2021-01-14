@@ -10,7 +10,7 @@ export interface ComponentData {
   meaning: string;
 }
 
-export interface CharacterData {
+export interface ChineseCharacterData {
   simplified: string;
   traditional: string | null;
   definitionData: DefinitionData;

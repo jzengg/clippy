@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  CharacterData,
+  ChineseCharacterData,
   ComponentData,
   DefinitionData,
 } from "../types/interfaces";
@@ -8,7 +8,7 @@ import {
 import CharacterWithVariation from "./CharacterWithVariation";
 
 type Props = {
-  charactersData: CharacterData[];
+  charactersData: ChineseCharacterData[];
   handleRemove: (idx: number) => void;
 };
 
