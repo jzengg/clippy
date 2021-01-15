@@ -7,14 +7,14 @@ import CharacterWithVariation from "./CharacterWithVariation";
 import { SavedCharacterData } from "../types/interfaces";
 
 type Props = {
-  savedCharacterData: SavedCharacterData;
+  selectedCharacterData: SavedCharacterData;
   handleSaveCharacter: () => void;
   selectedDefinitionIdx: number;
   setSelectedDefinitionIdx: (idx: number) => void;
 };
 
 function SelectedTextWidget({
-  savedCharacterData: {
+  selectedCharacterData: {
     simplified,
     traditional,
     definitionsData,

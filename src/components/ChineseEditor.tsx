@@ -52,15 +52,17 @@ export default function ChineseEditor() {
   const [exportData, setExportData] = React.useState<string | null>(null);
   const [selectedDefinitionIdx, setSelectedDefinitionIdx] = React.useState(0);
 
-  const savedCharacterData = getSavedCharacterData(
-    selectedText ?? "",
-    selectedDefinitionIdx
-  );
+  const selectedCharacterData =
+    selectedText != null && selectedText !== ""
+      ? getSavedCharacterData(selectedText, selectedDefinitionIdx)
+      : null;
   function addSavedCharacter() {
-    const newState = [...savedCharactersData, { ...savedCharacterData }];
-    localStorage.setItem(SAVED_CHARACTERS_DATA_KEY, JSON.stringify(newState));
-    setSavedCharactersData(newState);
-    setExportData(null);
+    if (selectedCharacterData != null) {
+      const newState = [...savedCharactersData, { ...selectedCharacterData }];
+      localStorage.setItem(SAVED_CHARACTERS_DATA_KEY, JSON.stringify(newState));
+      setSavedCharactersData(newState);
+      setExportData(null);
+    }
   }
   function removeSavedCharacter(indexToRemove: number) {
     setSavedCharactersData(
@@ -88,11 +90,11 @@ export default function ChineseEditor() {
         />
       </div>
       <div className="grid-col">
-        {selectedText != null && selectedText != "" && (
+        {selectedCharacterData != null && (
           <SelectedTextWidget
             selectedDefinitionIdx={selectedDefinitionIdx}
             setSelectedDefinitionIdx={setSelectedDefinitionIdx}
-            savedCharacterData={savedCharacterData}
+            selectedCharacterData={selectedCharacterData}
             handleSaveCharacter={addSavedCharacter}
           />
         )}
