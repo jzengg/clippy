@@ -52,11 +52,8 @@ export default function ChineseEditor() {
   const [exportData, setExportData] = React.useState<string | null>(null);
   const [selectedDefinitionIdx, setSelectedDefinitionIdx] = React.useState(0);
 
-  if (selectedText == null) {
-    return;
-  }
   const savedCharacterData = getSavedCharacterData(
-    selectedText,
+    selectedText ?? "",
     selectedDefinitionIdx
   );
   function addSavedCharacter() {

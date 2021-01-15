@@ -1,5 +1,4 @@
 import React from "react";
-import { getRadicalMeaning } from "../lib/hanziwrapper";
 import { ComponentData } from "../types/interfaces";
 
 type Props = {
