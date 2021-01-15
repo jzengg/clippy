@@ -10,11 +10,16 @@ import CharacterWithVariation from "./CharacterWithVariation";
 type Props = {
   charactersData: ChineseCharacterData[];
   handleRemove: (idx: number) => void;
+  exportData: string | null;
+  setExportData: (data: string | null) => void;
 };
 
-function SavedCharacterList({ charactersData, handleRemove }: Props) {
-  const [exportData, setExportData] = React.useState<string | null>(null);
-
+function SavedCharacterList({
+  charactersData,
+  handleRemove,
+  exportData,
+  setExportData,
+}: Props) {
   function prepareDownload() {
     setExportData(exportSavedCharactersToCSV());
   }
@@ -74,21 +79,32 @@ function SavedCharacterList({ charactersData, handleRemove }: Props) {
   return (
     <>
       <h3>Saved Characters</h3>
-      <ul>
-        {charactersData.map(({ simplified, traditional }, idx) => {
-          return (
-            <li key={idx}>
-              <CharacterWithVariation
-                simplified={simplified}
-                traditional={traditional}
-              />
-              <button onClick={() => handleRemove(idx)}>X</button>
-            </li>
-          );
-        })}
-      </ul>
-      {charactersData != null && charactersData.length > 0 && (
-        <button onClick={prepareDownload}>Get Download Link</button>
+      {charactersData.length > 0 && (
+        <>
+          <div className="saved-characters-container">
+            {charactersData.map(({ simplified, traditional }, idx) => {
+              return (
+                <div key={idx} className="saved-character-row">
+                  <span className="saved-character-item">
+                    <CharacterWithVariation
+                      simplified={simplified}
+                      traditional={traditional}
+                    />
+                  </span>
+                  <button
+                    className="remove-saved-character-button"
+                    onClick={() => handleRemove(idx)}
+                  >
+                    X
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+          <button className="prepare-download-button" onClick={prepareDownload}>
+            Export
+          </button>
+        </>
       )}
       {exportData != null && (
         <a

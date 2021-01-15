@@ -32,6 +32,7 @@ export default function ChineseEditor() {
         : [];
     return defaultSavedCharactersData;
   });
+  const [exportData, setExportData] = React.useState<string | null>(null);
 
   const selectedText = getSelectionText(editorState)?.trim();
   const isCharacterSelected = selectedText != null && selectedText != "";
@@ -47,12 +48,14 @@ export default function ChineseEditor() {
     const newState = [...savedCharactersData, { ...ChineseCharacterData }];
     localStorage.setItem(SAVED_CHARACTERS_DATA_KEY, JSON.stringify(newState));
     setSavedCharactersData(newState);
+    setExportData(null);
   }
 
   function removeSavedCharacter(indexToRemove: number) {
-    return setSavedCharactersData(
+    setSavedCharactersData(
       savedCharactersData.filter((_char, idx) => idx !== indexToRemove)
     );
+    setExportData(null);
   }
 
   return (
@@ -61,6 +64,8 @@ export default function ChineseEditor() {
         <SavedCharacterList
           handleRemove={removeSavedCharacter}
           charactersData={savedCharactersData}
+          setExportData={setExportData}
+          exportData={exportData}
         />
       </div>
       <div className="grid-col">
