@@ -38,10 +38,6 @@ function SelectedTextWidget({ selectedText, handleSaveCharacter }: Props) {
       seenDefinitions.add(definitionData.definition);
     }
   });
-
-  // show high frequency examples with their pinyin and meaning?
-  // update layout so we can show list of chars to save, should be backed up to local storage until cleared?
-  // have a list of characters to save. button to export to csv. ui to select export format? checkboxes to select which columns to export?
   const simplified = definitionsData?.[0]?.simplified;
   const traditional =
     definitionsData
