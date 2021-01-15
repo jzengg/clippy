@@ -1,11 +1,27 @@
 import React from "react";
-import { Editor, EditorState, convertToRaw, convertFromRaw } from "draft-js";
+import {
+  Editor,
+  EditorState,
+  convertToRaw,
+  convertFromRaw,
+  DraftHandleValue,
+} from "draft-js";
 import "draft-js/dist/Draft.css";
 import { getSelectionText } from "draftjs-utils";
 import { SavedCharacterData } from "../types/interfaces";
 import SelectedTextWidget from "./SelectedTextWidget";
 import SavedCharacterList from "./SavedCharacterList";
 import { getSavedCharacterData } from "../lib/hanziwrapper";
+import { getDefaultKeyBinding, KeyBindingUtil } from "draft-js";
+
+const { hasCommandModifier } = KeyBindingUtil;
+
+function myKeyBindingFn(e: React.KeyboardEvent<{}>): string | null {
+  if (e.keyCode === 83 /* `S` key */ && hasCommandModifier(e)) {
+    return "myeditor-save-character";
+  }
+  return getDefaultKeyBinding(e);
+}
 
 const SAVED_EDITOR_STATE_KEY = "clippySavedEditorState";
 const SAVED_CHARACTERS_DATA_KEY = "clippySavedCharactersData";
@@ -73,6 +89,14 @@ export default function ChineseEditor() {
     setExportData(null);
   }
 
+  function handleKeyCommand(command: string): DraftHandleValue {
+    if (command === "myeditor-save-character") {
+      addSavedCharacter();
+      return "handled";
+    }
+    return "not-handled";
+  }
+
   return (
     <div className="grid-root">
       <div className="grid-col-saved-characters">
@@ -86,6 +110,8 @@ export default function ChineseEditor() {
       </div>
       <div className="grid-col-editor">
         <Editor
+          handleKeyCommand={handleKeyCommand}
+          keyBindingFn={myKeyBindingFn}
           placeholder="Paste Chinese text"
           editorState={editorState}
           onChange={onChange}
