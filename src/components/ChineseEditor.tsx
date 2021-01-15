@@ -65,9 +65,11 @@ export default function ChineseEditor() {
     }
   }
   function removeSavedCharacter(indexToRemove: number) {
-    setSavedCharactersData(
-      savedCharactersData.filter((_char, idx) => idx !== indexToRemove)
+    const newState = savedCharactersData.filter(
+      (_char, idx) => idx !== indexToRemove
     );
+    localStorage.setItem(SAVED_CHARACTERS_DATA_KEY, JSON.stringify(newState));
+    setSavedCharactersData(newState);
     setExportData(null);
   }
 
