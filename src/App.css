@@ -100,6 +100,17 @@ button:active {
   column-gap: 20px;
 }
 
+.grid-col-saved-characters,
+.grid-col-editor {
+  padding-right: 8px;
+  border-right: 1px solid lightgrey;
+}
+
+.sticky {
+  position: sticky;
+  top: 24px;
+}
+
 .saved-characters-container {
   padding: 8px;
   margin-bottom: 8px;

@@ -52,7 +52,7 @@ function SelectedTextWidget({ selectedText, handleSaveCharacter }: Props) {
   const mediumFreqExamples = examples?.[1]?.slice(0, 3) ?? [];
 
   return (
-    <>
+    <div className="sticky">
       <h3>
         Character:{" "}
         <CharacterWithVariation
@@ -97,7 +97,7 @@ function SelectedTextWidget({ selectedText, handleSaveCharacter }: Props) {
       <ExampleWordList examples={highFreqExamples} />
       <h4>Medium Frequency</h4>
       <ExampleWordList examples={mediumFreqExamples} />
-    </>
+    </div>
   );
 }
 

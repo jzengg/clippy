@@ -60,7 +60,7 @@ export default function ChineseEditor() {
 
   return (
     <div className="grid-root">
-      <div className="grid-col">
+      <div className="grid-col-saved-characters">
         <SavedCharacterList
           handleRemove={removeSavedCharacter}
           charactersData={savedCharactersData}
@@ -68,7 +68,7 @@ export default function ChineseEditor() {
           exportData={exportData}
         />
       </div>
-      <div className="grid-col">
+      <div className="grid-col-editor">
         <Editor
           placeholder="Paste Chinese text"
           editorState={editorState}

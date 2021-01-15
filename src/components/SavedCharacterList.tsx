@@ -77,7 +77,7 @@ function SavedCharacterList({
   }
 
   return (
-    <>
+    <div className="sticky">
       <h3>Saved Characters</h3>
       {charactersData.length > 0 && (
         <>
@@ -114,7 +114,7 @@ function SavedCharacterList({
           Download
         </a>
       )}
-    </>
+    </div>
   );
 }
 
