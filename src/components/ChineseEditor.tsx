@@ -56,23 +56,29 @@ export default function ChineseEditor() {
   }
 
   return (
-    <>
-      <Editor
-        placeholder="Paste Chinese text"
-        editorState={editorState}
-        onChange={setEditorState}
-      />
-      <button onClick={saveText}>Save Text</button>
-      <SavedCharacterList
-        handleRemove={removeSavedCharacter}
-        charactersData={savedCharactersData}
-      />
-      {isCharacterSelected && (
-        <SelectedTextWidget
-          handleSaveCharacter={addSavedCharacter}
-          selectedText={selectedText}
+    <div className="grid-root">
+      <div className="grid-col">
+        <SavedCharacterList
+          handleRemove={removeSavedCharacter}
+          charactersData={savedCharactersData}
         />
-      )}
-    </>
+      </div>
+      <div className="grid-col">
+        <Editor
+          placeholder="Paste Chinese text"
+          editorState={editorState}
+          onChange={setEditorState}
+        />
+        <button onClick={saveText}>Save Text</button>
+      </div>
+      <div className="grid-col">
+        {isCharacterSelected && (
+          <SelectedTextWidget
+            handleSaveCharacter={addSavedCharacter}
+            selectedText={selectedText}
+          />
+        )}
+      </div>
+    </div>
   );
 }
