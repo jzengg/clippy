@@ -176,6 +176,10 @@ selected-character {
   margin-left: 16px;
 }
 
+.saved-characters-header {
+  margin-bottom: 8px;
+}
+
 .remove-saved-character-button {
 }
 
