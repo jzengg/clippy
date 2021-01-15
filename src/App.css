@@ -184,8 +184,9 @@ selected-character {
 }
 
 .selected-definition {
+  display: contents;
   padding: 4px;
-  border: 1px solid grey;
+  color: blue;
 }
 
 .App {
