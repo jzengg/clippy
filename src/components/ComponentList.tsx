@@ -7,18 +7,20 @@ type Props = {
 
 function ComponentList({ components }: Props) {
   return (
-    <>
+    <div className="component-container">
       {components.map((component, idx) => {
         const meaning = getRadicalMeaning(component);
         return (
           <React.Fragment key={idx}>
             <span className="red">{component}</span>
-            {meaning != "N/A" && `(${meaning})`}
-            {idx != components.length - 1 && ", "}
+            <span className="radical-meaning">
+              {meaning != "N/A" && `(${meaning})`}
+              {idx != components.length - 1 && ", "}
+            </span>
           </React.Fragment>
         );
       })}
-    </>
+    </div>
   );
 }
 

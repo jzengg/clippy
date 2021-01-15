@@ -123,9 +123,57 @@ button:active {
   /* align-content: center; */
 }
 
-.saved-character-item {
+.saved-character-item,
+selected-character {
   font-size: 24px;
   margin-bottom: 4px;
+}
+
+.selected-character {
+  display: inline;
+  font-size: 36px;
+  padding: 8px;
+  border: 1px dotted grey;
+  margin-right: 4px;
+}
+
+.selected-character-header {
+  margin-bottom: 8px;
+}
+
+.component-container {
+  padding: 8px;
+  margin-bottom: 4px;
+  border: 1px dotted grey;
+}
+
+.radical-meaning {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.example-character {
+  font-size: 20px;
+  margin-right: 4px;
+}
+
+.example-character-row {
+  margin-bottom: 16px;
+}
+
+.example-character-container {
+  margin-left: 16px;
+  margin-bottom: 8px;
+}
+
+.definition-container {
+  margin-bottom: 8px;
+}
+
+.definition-row {
+  cursor: pointer;
+  margin-bottom: 4px;
+  margin-left: 16px;
 }
 
 .remove-saved-character-button {
@@ -133,6 +181,11 @@ button:active {
 
 .prepare-download-button {
   margin-bottom: 8px;
+}
+
+.selected-definition {
+  padding: 4px;
+  border: 1px solid grey;
 }
 
 .App {

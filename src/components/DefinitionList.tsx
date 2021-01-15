@@ -13,16 +13,24 @@ function DefinitionList({
   handleSelectDefinition,
 }: Props) {
   return (
-    <ol>
+    <div className="definition-container">
       {definitions.map((definitionData, idx) => {
         const content = `${definitionData.pinyin} - ${definitionData.definition}`;
         return (
-          <li onClick={() => handleSelectDefinition(idx)} key={idx}>
-            {selectedDefinitionIdx === idx ? <b>{content}</b> : content}
-          </li>
+          <div
+            className="definition-row"
+            onClick={() => handleSelectDefinition(idx)}
+            key={idx}
+          >
+            {selectedDefinitionIdx === idx ? (
+              <div className="selected-definition">{content}</div>
+            ) : (
+              content
+            )}
+          </div>
         );
       })}
-    </ol>
+    </div>
   );
 }
 

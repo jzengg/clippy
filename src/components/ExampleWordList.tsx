@@ -8,19 +8,21 @@ type Props = {
 
 function ExampleWordList({ examples }: Props) {
   return (
-    <ol>
+    <div className="example-character-container">
       {examples.map((example, idx) => {
         return (
-          <li key={idx}>
-            <CharacterWithVariation
-              simplified={example.simplified}
-              traditional={example.traditional}
-            />{" "}
+          <div className="example-character-row" key={idx}>
+            <span className="example-character">
+              <CharacterWithVariation
+                simplified={example.simplified}
+                traditional={example.traditional}
+              />
+            </span>
             {example.pinyin} - {example.definition}
-          </li>
+          </div>
         );
       })}
-    </ol>
+    </div>
   );
 }
 

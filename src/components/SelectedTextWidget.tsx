@@ -53,33 +53,34 @@ function SelectedTextWidget({ selectedText, handleSaveCharacter }: Props) {
 
   return (
     <div className="sticky">
-      <h3>
-        Character:{" "}
-        <CharacterWithVariation
-          simplified={simplified}
-          traditional={traditional}
-        />
-      </h3>
-      <button
-        onClick={() =>
-          handleSaveCharacter({
-            simplified,
-            traditional,
-            definitionData: definitionsData?.[selectedDefinitionIdx],
-            basicComponents: basicComponents.map((component) => ({
-              component,
-              meaning: getRadicalMeaning(component),
-            })),
-            radicalComponents: radicalComponents.map((component) => ({
-              component,
-              meaning: getRadicalMeaning(component),
-            })),
-            examples: [...highFreqExamples, ...mediumFreqExamples],
-          })
-        }
-      >
-        Save Character
-      </button>
+      <div className="selected-character-header">
+        <h3 className="selected-character">
+          <CharacterWithVariation
+            simplified={simplified}
+            traditional={traditional}
+          />
+        </h3>
+        <button
+          onClick={() =>
+            handleSaveCharacter({
+              simplified,
+              traditional,
+              definitionData: definitionsData?.[selectedDefinitionIdx],
+              basicComponents: basicComponents.map((component) => ({
+                component,
+                meaning: getRadicalMeaning(component),
+              })),
+              radicalComponents: radicalComponents.map((component) => ({
+                component,
+                meaning: getRadicalMeaning(component),
+              })),
+              examples: [...highFreqExamples, ...mediumFreqExamples],
+            })
+          }
+        >
+          Save Character
+        </button>
+      </div>
       <h3>Pinyin & Meaning</h3>
       <DefinitionList
         selectedDefinitionIdx={selectedDefinitionIdx}
