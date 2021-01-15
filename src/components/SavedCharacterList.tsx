@@ -12,12 +12,14 @@ type Props = {
   handleRemove: (idx: number) => void;
   exportData: string | null;
   setExportData: (data: string | null) => void;
+  setSelectedText: (text: string | null) => void;
 };
 
 function SavedCharacterList({
   charactersData,
   handleRemove,
   exportData,
+  setSelectedText,
   setExportData,
 }: Props) {
   function prepareDownload() {
@@ -85,7 +87,10 @@ function SavedCharacterList({
             {charactersData.map(({ simplified, traditional }, idx) => {
               return (
                 <div key={idx} className="saved-character-row">
-                  <span className="saved-character-item">
+                  <span
+                    onClick={() => setSelectedText(simplified)}
+                    className="saved-character-item"
+                  >
                     <CharacterWithVariation
                       simplified={simplified}
                       traditional={traditional}

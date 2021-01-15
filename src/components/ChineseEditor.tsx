@@ -22,13 +22,19 @@ export default function ChineseEditor() {
   });
   const onChange = React.useCallback(
     (newEditorState) => {
+      const selectionText = getSelectionText(newEditorState)?.trim();
+      setSelectedText(selectionText);
+
       setEditorState(newEditorState);
       const contentState = newEditorState.getCurrentContent();
-      const serializedContent = JSON.stringify(convertToRaw(contentState));
-      localStorage.setItem(SAVED_EDITOR_STATE_KEY, serializedContent);
+      if (contentState !== editorState.getCurrentContent()) {
+        const serializedContent = JSON.stringify(convertToRaw(contentState));
+        localStorage.setItem(SAVED_EDITOR_STATE_KEY, serializedContent);
+      }
     },
     [editorState, setEditorState]
   );
+  const [selectedText, setSelectedText] = React.useState<string | null>(null);
 
   const [savedCharactersData, setSavedCharactersData] = React.useState<
     ChineseCharacterData[]
@@ -43,9 +49,6 @@ export default function ChineseEditor() {
     return defaultSavedCharactersData;
   });
   const [exportData, setExportData] = React.useState<string | null>(null);
-
-  const selectedText = getSelectionText(editorState)?.trim();
-  const isCharacterSelected = selectedText != null && selectedText != "";
 
   function addSavedCharacter(ChineseCharacterData: ChineseCharacterData) {
     const newState = [...savedCharactersData, { ...ChineseCharacterData }];
@@ -64,6 +67,7 @@ export default function ChineseEditor() {
     <div className="grid-root">
       <div className="grid-col-saved-characters">
         <SavedCharacterList
+          setSelectedText={setSelectedText}
           handleRemove={removeSavedCharacter}
           charactersData={savedCharactersData}
           setExportData={setExportData}
@@ -78,7 +82,7 @@ export default function ChineseEditor() {
         />
       </div>
       <div className="grid-col">
-        {isCharacterSelected && (
+        {selectedText != null && selectedText != "" && (
           <SelectedTextWidget
             handleSaveCharacter={addSavedCharacter}
             selectedText={selectedText}

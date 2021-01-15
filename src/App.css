@@ -123,8 +123,8 @@ button:active {
   /* align-content: center; */
 }
 
-.saved-character-item,
-selected-character {
+.saved-character-item {
+  cursor: pointer;
   font-size: 24px;
   margin-bottom: 4px;
 }
