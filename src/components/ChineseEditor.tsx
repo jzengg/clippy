@@ -20,6 +20,7 @@ export default function ChineseEditor() {
         : EditorState.createEmpty();
     return defaultEditorState;
   });
+  const [selectedText, setSelectedText] = React.useState<string | null>(null);
   const onChange = React.useCallback(
     (newEditorState) => {
       const selectionText = getSelectionText(newEditorState)?.trim();
@@ -34,7 +35,6 @@ export default function ChineseEditor() {
     },
     [editorState, setEditorState]
   );
-  const [selectedText, setSelectedText] = React.useState<string | null>(null);
 
   const [savedCharactersData, setSavedCharactersData] = React.useState<
     ChineseCharacterData[]
