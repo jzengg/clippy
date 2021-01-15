@@ -1,14 +1,14 @@
 import React from "react";
 import {
-  ChineseCharacterData,
   ComponentData,
   DefinitionData,
+  SavedCharacterData,
 } from "../types/interfaces";
 
 import CharacterWithVariation from "./CharacterWithVariation";
 
 type Props = {
-  charactersData: ChineseCharacterData[];
+  charactersData: SavedCharacterData[];
   handleRemove: (idx: number) => void;
   exportData: string | null;
   setExportData: (data: string | null) => void;
@@ -56,13 +56,18 @@ function SavedCharacterList({
       ({
         simplified,
         traditional,
-        definitionData: { definition, pinyin },
+        definitionsData,
+        definitionIdx,
         basicComponents,
         radicalComponents,
-        examples,
+        highFreqExamples,
+        mediumFreqExamples,
       }) => {
         const radicalComponentsText = getComponentsText(radicalComponents);
         const basicComponentsText = getComponentsText(basicComponents);
+        const definitionData = definitionsData[definitionIdx];
+        const { definition, pinyin } = definitionData;
+        const examples = [...highFreqExamples, ...mediumFreqExamples];
         const exampleTexts = getExampleTexts(examples);
         return [
           simplified,

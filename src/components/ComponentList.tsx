@@ -1,15 +1,15 @@
 import React from "react";
 import { getRadicalMeaning } from "../lib/hanziwrapper";
+import { ComponentData } from "../types/interfaces";
 
 type Props = {
-  components: string[];
+  components: ComponentData[];
 };
 
 function ComponentList({ components }: Props) {
   return (
     <div className="component-container">
-      {components.map((component, idx) => {
-        const meaning = getRadicalMeaning(component);
+      {components.map(({ component, meaning }, idx) => {
         return (
           <React.Fragment key={idx}>
             <span className="red">{component}</span>

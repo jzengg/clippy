@@ -4,49 +4,29 @@ import ExampleWordList from "./ExampleWordList";
 import ComponentList from "./ComponentList";
 import DefinitionList from "./DefinitionList";
 import CharacterWithVariation from "./CharacterWithVariation";
-import { DefinitionData, ChineseCharacterData } from "../types/interfaces";
-import {
-  decomposeCharacter,
-  definitionLookup,
-  getExampleUsages,
-  getRadicalMeaning,
-} from "../lib/hanziwrapper";
+import { SavedCharacterData } from "../types/interfaces";
 
 type Props = {
-  selectedText: string;
-  handleSaveCharacter: (char: ChineseCharacterData) => void;
+  savedCharacterData: SavedCharacterData;
+  handleSaveCharacter: () => void;
+  selectedDefinitionIdx: number;
+  setSelectedDefinitionIdx: (idx: number) => void;
 };
 
-function SelectedTextWidget({ selectedText, handleSaveCharacter }: Props) {
-  const [selectedDefinitionIdx, setSelectedDefinitionIdx] = React.useState(0);
-  const decomposeData = decomposeCharacter(selectedText);
-  const character = decomposeData.character;
-  const basicComponents = (decomposeData?.components1 ?? []).filter(
-    (component) => component !== "No glyph available"
-  );
-  const radicalComponents = (decomposeData?.components2 ?? []).filter(
-    (component) => component !== "No glyph available"
-  );
-  // filter out random duplicates
-  const rawDefinitionsData = definitionLookup(selectedText) || [];
-  const definitionsData: DefinitionData[] = [];
-  const seenDefinitions = new Set();
-  rawDefinitionsData.slice(0, 10).forEach((definitionData) => {
-    if (!seenDefinitions.has(definitionData.definition)) {
-      definitionsData.push(definitionData);
-    } else {
-      seenDefinitions.add(definitionData.definition);
-    }
-  });
-  const simplified = definitionsData?.[0]?.simplified;
-  const traditional =
-    definitionsData
-      .map((data) => data.traditional)
-      .find((char) => char != simplified) ?? null;
-  const examples = getExampleUsages(character);
-  const highFreqExamples = examples?.[0]?.slice(0, 3) ?? [];
-  const mediumFreqExamples = examples?.[1]?.slice(0, 3) ?? [];
-
+function SelectedTextWidget({
+  savedCharacterData: {
+    simplified,
+    traditional,
+    definitionsData,
+    basicComponents,
+    radicalComponents,
+    mediumFreqExamples,
+    highFreqExamples,
+  },
+  handleSaveCharacter,
+  selectedDefinitionIdx,
+  setSelectedDefinitionIdx,
+}: Props) {
   return (
     <div className="sticky">
       <div className="selected-character-header">
@@ -56,26 +36,7 @@ function SelectedTextWidget({ selectedText, handleSaveCharacter }: Props) {
             traditional={traditional}
           />
         </h3>
-        <button
-          onClick={() =>
-            handleSaveCharacter({
-              simplified,
-              traditional,
-              definitionData: definitionsData?.[selectedDefinitionIdx],
-              basicComponents: basicComponents.map((component) => ({
-                component,
-                meaning: getRadicalMeaning(component),
-              })),
-              radicalComponents: radicalComponents.map((component) => ({
-                component,
-                meaning: getRadicalMeaning(component),
-              })),
-              examples: [...highFreqExamples, ...mediumFreqExamples],
-            })
-          }
-        >
-          Save Character
-        </button>
+        <button onClick={handleSaveCharacter}>Save Character</button>
       </div>
       <h3>Pinyin & Meaning</h3>
       <DefinitionList

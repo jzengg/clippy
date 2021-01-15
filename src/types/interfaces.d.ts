@@ -10,13 +10,15 @@ export interface ComponentData {
   meaning: string;
 }
 
-export interface ChineseCharacterData {
+export interface SavedCharacterData {
   simplified: string;
   traditional: string | null;
-  definitionData: DefinitionData;
+  definitionsData: DefinitionData[];
+  definitionIdx: number;
   basicComponents: ComponentData[];
   radicalComponents: ComponentData[];
-  examples: DefinitionData[];
+  highFreqExamples: DefinitionData[];
+  mediumFreqExamples: DefinitionData[];
 }
 
 export interface DecomposeData {

@@ -2,9 +2,10 @@ import React from "react";
 import { Editor, EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { getSelectionText } from "draftjs-utils";
-import { ChineseCharacterData } from "../types/interfaces";
+import { SavedCharacterData } from "../types/interfaces";
 import SelectedTextWidget from "./SelectedTextWidget";
 import SavedCharacterList from "./SavedCharacterList";
+import { getSavedCharacterData } from "../lib/hanziwrapper";
 
 const SAVED_EDITOR_STATE_KEY = "clippySavedEditorState";
 const SAVED_CHARACTERS_DATA_KEY = "clippySavedCharactersData";
@@ -37,7 +38,7 @@ export default function ChineseEditor() {
   );
 
   const [savedCharactersData, setSavedCharactersData] = React.useState<
-    ChineseCharacterData[]
+    SavedCharacterData[]
   >(() => {
     const persistedSavedCharactersData = localStorage.getItem(
       SAVED_CHARACTERS_DATA_KEY
@@ -49,9 +50,17 @@ export default function ChineseEditor() {
     return defaultSavedCharactersData;
   });
   const [exportData, setExportData] = React.useState<string | null>(null);
+  const [selectedDefinitionIdx, setSelectedDefinitionIdx] = React.useState(0);
 
-  function addSavedCharacter(ChineseCharacterData: ChineseCharacterData) {
-    const newState = [...savedCharactersData, { ...ChineseCharacterData }];
+  if (selectedText == null) {
+    return;
+  }
+  const savedCharacterData = getSavedCharacterData(
+    selectedText,
+    selectedDefinitionIdx
+  );
+  function addSavedCharacter() {
+    const newState = [...savedCharactersData, { ...savedCharacterData }];
     localStorage.setItem(SAVED_CHARACTERS_DATA_KEY, JSON.stringify(newState));
     setSavedCharactersData(newState);
     setExportData(null);
@@ -84,8 +93,10 @@ export default function ChineseEditor() {
       <div className="grid-col">
         {selectedText != null && selectedText != "" && (
           <SelectedTextWidget
+            selectedDefinitionIdx={selectedDefinitionIdx}
+            setSelectedDefinitionIdx={setSelectedDefinitionIdx}
+            savedCharacterData={savedCharacterData}
             handleSaveCharacter={addSavedCharacter}
-            selectedText={selectedText}
           />
         )}
       </div>
