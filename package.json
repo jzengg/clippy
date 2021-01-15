@@ -1,6 +1,6 @@
 {
   "name": "chinese-clippy",
-  "homepage": "http://jzengg.github.io/chinese-clippy",
+  "homepage": "http://jzengg.github.io/clippy",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
