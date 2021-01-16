@@ -11,15 +11,19 @@ type Props = {
   charactersData: SavedCharacterData[];
   handleRemove: (idx: number) => void;
   exportData: string | null;
+  selectedText: string | null;
   setExportData: (data: string | null) => void;
   setSelectedText: (text: string | null) => void;
+  setSelectedDefinitionIdx: (idx: number) => void;
 };
 
 function SavedCharacterList({
   charactersData,
   handleRemove,
   exportData,
+  selectedText,
   setSelectedText,
+  setSelectedDefinitionIdx,
   setExportData,
 }: Props) {
   function prepareDownload() {
@@ -83,33 +87,44 @@ function SavedCharacterList({
     return csv.join("\n");
   }
 
+  function handleClickChar(char: string, idx: number) {
+    setSelectedText(char);
+    setSelectedDefinitionIdx(idx);
+  }
+
   return (
     <div className="sticky">
       <h3 className="saved-characters-header">Saved Characters</h3>
       {charactersData.length > 0 && (
         <>
           <div className="saved-characters-container">
-            {charactersData.map(({ simplified, traditional }, idx) => {
-              return (
-                <div key={idx} className="saved-character-row">
-                  <span
-                    onClick={() => setSelectedText(simplified)}
-                    className="saved-character-item"
-                  >
-                    <CharacterWithVariation
-                      simplified={simplified}
-                      traditional={traditional}
-                    />
-                  </span>
-                  <button
-                    className="remove-saved-character-button"
-                    onClick={() => handleRemove(idx)}
-                  >
-                    X
-                  </button>
-                </div>
-              );
-            })}
+            {charactersData.map(
+              ({ simplified, traditional, definitionIdx }, idx) => {
+                return (
+                  <div key={idx} className="saved-character-row">
+                    <span
+                      onClick={() => handleClickChar(simplified, definitionIdx)}
+                      className={`saved-character-item${
+                        simplified === selectedText
+                          ? " saved-character-highlighted"
+                          : ""
+                      }`}
+                    >
+                      <CharacterWithVariation
+                        simplified={simplified}
+                        traditional={traditional}
+                      />
+                    </span>
+                    <button
+                      className="remove-saved-character-button"
+                      onClick={() => handleRemove(idx)}
+                    >
+                      X
+                    </button>
+                  </div>
+                );
+              }
+            )}
           </div>
           <button className="prepare-download-button" onClick={prepareDownload}>
             Export

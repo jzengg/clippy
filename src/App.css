@@ -129,6 +129,10 @@ button:active {
   margin-bottom: 4px;
 }
 
+.saved-character-highlighted {
+  color: red;
+}
+
 .selected-character {
   display: inline;
   font-size: 36px;

@@ -83,7 +83,12 @@ export default function ChineseEditor() {
       ? getSavedCharacterData(selectedText, selectedDefinitionIdx)
       : null;
   function addSavedCharacter() {
-    if (selectedCharacterData != null) {
+    if (
+      selectedCharacterData != null &&
+      !savedCharactersData
+        .map((data) => data.simplified)
+        .includes(selectedCharacterData.simplified)
+    ) {
       const newState = [...savedCharactersData, { ...selectedCharacterData }];
       localStorage.setItem(SAVED_CHARACTERS_DATA_KEY, JSON.stringify(newState));
       setSavedCharactersData(newState);
@@ -126,6 +131,8 @@ export default function ChineseEditor() {
     <div className="grid-root">
       <div className="grid-col-saved-characters">
         <SavedCharacterList
+          selectedText={selectedText}
+          setSelectedDefinitionIdx={setSelectedDefinitionIdx}
           setSelectedText={setSelectedText}
           handleRemove={removeSavedCharacter}
           charactersData={savedCharactersData}
