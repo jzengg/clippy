@@ -17,7 +17,6 @@ import { getDefaultKeyBinding, KeyBindingUtil } from "draft-js";
 const { hasCommandModifier } = KeyBindingUtil;
 
 function myKeyBindingFn(e: React.KeyboardEvent<{}>): string | null {
-  console.log(e.key);
   if (e.key === "s" && hasCommandModifier(e)) {
     return SAVE_CHARACTER_COMMAND;
   }

@@ -26,7 +26,7 @@ function SavedCharacterList({
     setExportData(exportSavedCharactersToCSV());
   }
   function getDownloadURL(data: string) {
-    const blob = new Blob([data], { type: "text/csv;charset=utf-8;" });
+    const blob = new Blob([data], { type: "text/tsv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     return url;
   }
@@ -77,7 +77,7 @@ function SavedCharacterList({
           basicComponentsText,
           radicalComponentsText,
           ...exampleTexts,
-        ].join(",");
+        ].join("\t");
       }
     );
     return csv.join("\n");
@@ -119,7 +119,7 @@ function SavedCharacterList({
       {exportData != null && (
         <a
           href={getDownloadURL(exportData)}
-          download={`clippy_export_${new Date().getTime()}.csv`}
+          download={`clippy_export_${new Date().getTime()}.tsv`}
         >
           Download
         </a>
