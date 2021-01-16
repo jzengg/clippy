@@ -27,9 +27,11 @@ function SelectedTextWidget({
   selectedDefinitionIdx,
   setSelectedDefinitionIdx,
 }: Props) {
-  if (selectedDefinitionIdx > definitionsData.length - 1) {
-    setSelectedDefinitionIdx(0);
-  }
+  React.useEffect(() => {
+    if (selectedDefinitionIdx > definitionsData.length - 1) {
+      setSelectedDefinitionIdx(0);
+    }
+  }, [definitionsData, selectedDefinitionIdx]);
   return (
     <div className="sticky">
       <div className="selected-character-header">

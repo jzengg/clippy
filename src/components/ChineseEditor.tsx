@@ -17,13 +17,14 @@ import { getDefaultKeyBinding, KeyBindingUtil } from "draft-js";
 const { hasCommandModifier } = KeyBindingUtil;
 
 function myKeyBindingFn(e: React.KeyboardEvent<{}>): string | null {
+  console.log(e.key);
   if (e.key === "s" && hasCommandModifier(e)) {
     return SAVE_CHARACTER_COMMAND;
   }
-  if (e.key === "j" && hasCommandModifier(e)) {
+  if (e.key === "ArrowDown" && hasCommandModifier(e)) {
     return SELECT_DEFINITION_DOWN_COMMAND;
   }
-  if (e.key === "k" && hasCommandModifier(e)) {
+  if (e.key === "ArrowUp" && hasCommandModifier(e)) {
     return SELECT_DEFINITION_UP_COMMAND;
   }
   return getDefaultKeyBinding(e);
