@@ -1,12 +1,25 @@
 import React from "react";
 import { DraftHandleValue, Editor, EditorState } from "draft-js";
-import {
-  SAVE_CHARACTER_COMMAND,
-  SELECT_DEFINITION_DOWN_COMMAND,
-  SELECT_DEFINITION_UP_COMMAND,
-  myKeyBindingFn,
-} from "../lib/draftjs";
 import { SavedCharacterData } from "../types/interfaces";
+import { getDefaultKeyBinding, KeyBindingUtil } from "draft-js";
+const { hasCommandModifier } = KeyBindingUtil;
+
+const SAVE_CHARACTER_COMMAND = "myeditor-save-character";
+const SELECT_DEFINITION_UP_COMMAND = "myeditor-select-definition-up";
+const SELECT_DEFINITION_DOWN_COMMAND = "myeditor-select-definition-down";
+
+function myKeyBindingFn(e: React.KeyboardEvent<{}>): string | null {
+  if ((e.key === "s" || e.key === "Enter") && hasCommandModifier(e)) {
+    return SAVE_CHARACTER_COMMAND;
+  }
+  if (e.key === "ArrowDown" && hasCommandModifier(e)) {
+    return SELECT_DEFINITION_DOWN_COMMAND;
+  }
+  if (e.key === "ArrowUp" && hasCommandModifier(e)) {
+    return SELECT_DEFINITION_UP_COMMAND;
+  }
+  return getDefaultKeyBinding(e);
+}
 
 type Props = {
   saveSelectedCharacter: () => void;
@@ -27,7 +40,7 @@ export function ClippyEditor({
 }: Props) {
   function handleKeyCommand(command: string): DraftHandleValue {
     if (command === SAVE_CHARACTER_COMMAND) {
-      saveSelectedCharacter;
+      saveSelectedCharacter();
       return "handled";
     }
     if (
