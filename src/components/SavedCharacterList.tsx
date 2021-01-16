@@ -1,11 +1,11 @@
 import React from "react";
-import { SavedCharacterData } from "../types/interfaces";
+import { ClippyCharacterData } from "../types/interfaces";
 
 import CharacterWithVariation from "./CharacterWithVariation";
-import { downloadSavedCharacters } from "../lib/export";
+import { downloadCharactersData } from "../lib/export";
 
 type Props = {
-  charactersData: SavedCharacterData[];
+  charactersData: ClippyCharacterData[];
   handleRemove: (idx: number) => void;
   selectedText: string | null;
   setSelectedText: (text: string | null) => void;
@@ -20,7 +20,7 @@ function SavedCharacterList({
   setSelectedDefinitionIdx,
 }: Props) {
   function downloadFile() {
-    downloadSavedCharacters(charactersData);
+    downloadCharactersData(charactersData);
   }
   function handleClickChar(char: string, idx: number) {
     setSelectedText(char);

@@ -4,7 +4,7 @@ import pinyinize from "pinyinize";
 import {
   DecomposeData,
   DefinitionData,
-  SavedCharacterData,
+  ClippyCharacterData,
 } from "../types/interfaces";
 
 export function getRadicalMeaning(character: string): string {
@@ -36,10 +36,10 @@ function cleanDefinitionData(definitionData: DefinitionData): DefinitionData {
   };
 }
 
-export function getSavedCharacterData(
+export function getCharacterData(
   text: string,
   definitionIdx: number
-): SavedCharacterData {
+): ClippyCharacterData {
   const decomposeData = decomposeCharacter(text);
   const character = decomposeData.character;
   const basicComponents = (decomposeData?.components1 ?? [])

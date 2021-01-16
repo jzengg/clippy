@@ -4,10 +4,10 @@ import ExampleWordList from "./ExampleWordList";
 import ComponentList from "./ComponentList";
 import DefinitionList from "./DefinitionList";
 import CharacterWithVariation from "./CharacterWithVariation";
-import { SavedCharacterData } from "../types/interfaces";
+import { ClippyCharacterData } from "../types/interfaces";
 
 type Props = {
-  selectedCharacterData: SavedCharacterData;
+  selectedCharacterData: ClippyCharacterData;
   handleSaveCharacter: () => void;
   selectedDefinitionIdx: number;
   setSelectedDefinitionIdx: (idx: number) => void;
@@ -33,11 +33,10 @@ function SelectedTextWidget({
     }
   }, [definitionsData, selectedDefinitionIdx]);
 
-  const handleSelectDefinition = React.useCallback(
-    (e: React.BaseSyntheticEvent) =>
-      setSelectedDefinitionIdx(parseInt(e.target.value)),
-    [setSelectedDefinitionIdx]
-  );
+  function handleSelectDefinition(e: React.BaseSyntheticEvent) {
+    setSelectedDefinitionIdx(parseInt(e.target.value));
+  }
+
   return (
     <div className="sticky">
       <div className="selected-character-header">

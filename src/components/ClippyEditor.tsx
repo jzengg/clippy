@@ -1,6 +1,6 @@
 import React from "react";
 import { DraftHandleValue, Editor, EditorState } from "draft-js";
-import { SavedCharacterData } from "../types/interfaces";
+import { ClippyCharacterData } from "../types/interfaces";
 import { getDefaultKeyBinding, KeyBindingUtil } from "draft-js";
 const { hasCommandModifier } = KeyBindingUtil;
 
@@ -23,7 +23,7 @@ function myKeyBindingFn(e: React.KeyboardEvent<{}>): string | null {
 
 type Props = {
   saveSelectedCharacter: () => void;
-  selectedCharacterData: SavedCharacterData | null;
+  selectedCharacterData: ClippyCharacterData | null;
   selectedDefinitionIdx: number;
   setSelectedDefinitionIdx: (idx: number) => void;
   editorState: EditorState;

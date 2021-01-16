@@ -1,7 +1,7 @@
 import {
   ComponentData,
   DefinitionData,
-  SavedCharacterData,
+  ClippyCharacterData,
 } from "../types/interfaces";
 
 function getComponentsText(components: ComponentData[]) {
@@ -25,7 +25,7 @@ function getExampleTexts(examples: DefinitionData[]) {
     );
 }
 
-function exportSavedCharactersToTSV(charactersData: SavedCharacterData[]) {
+function convertCharactersDataToTSV(charactersData: ClippyCharacterData[]) {
   const csv = charactersData.map(
     ({
       simplified,
@@ -57,8 +57,9 @@ function exportSavedCharactersToTSV(charactersData: SavedCharacterData[]) {
   return csv.join("\n");
 }
 
-export function downloadSavedCharacters(charactersData: SavedCharacterData[]) {
-  const data = exportSavedCharactersToTSV(charactersData);
+// impl cribbed from https://github.com/kennethjiang/js-file-download
+export function downloadCharactersData(charactersData: ClippyCharacterData[]) {
+  const data = convertCharactersDataToTSV(charactersData);
   const filename = `clippy_export_${new Date().getTime()}.tsv`;
   const blob = new Blob([data], { type: "text/tsv;charset=utf-8;" });
   const blobURL =

@@ -10,7 +10,7 @@ export interface ComponentData {
   meaning: string;
 }
 
-export interface SavedCharacterData {
+export interface ClippyCharacterData {
   simplified: string;
   traditional: string | null;
   definitionsData: DefinitionData[];

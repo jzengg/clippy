@@ -2,10 +2,10 @@ import React from "react";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { getSelectionText } from "draftjs-utils";
-import { SavedCharacterData } from "../types/interfaces";
+import { ClippyCharacterData } from "../types/interfaces";
 import SelectedTextWidget from "./SelectedTextWidget";
 import SavedCharacterList from "./SavedCharacterList";
-import { getSavedCharacterData } from "../lib/hanziwrapper";
+import { getCharacterData } from "../lib/hanziwrapper";
 import { ClippyEditor } from "./ClippyEditor";
 
 const SAVED_EDITOR_STATE_KEY = "clippySavedEditorState";
@@ -25,7 +25,7 @@ export default function Clippy() {
   const [selectedText, setSelectedText] = React.useState<string | null>(null);
 
   const [savedCharactersData, setSavedCharactersData] = React.useState<
-    SavedCharacterData[]
+    ClippyCharacterData[]
   >(() => {
     const persistedSavedCharactersData = localStorage.getItem(
       SAVED_CHARACTERS_DATA_KEY
@@ -39,7 +39,7 @@ export default function Clippy() {
   const [selectedDefinitionIdx, setSelectedDefinitionIdx] = React.useState(0);
   const selectedCharacterData =
     selectedText != null && selectedText !== ""
-      ? getSavedCharacterData(selectedText, selectedDefinitionIdx)
+      ? getCharacterData(selectedText, selectedDefinitionIdx)
       : null;
 
   const onEditorChange = React.useCallback(
@@ -57,7 +57,7 @@ export default function Clippy() {
   );
 
   function setSavedCharactersDataWithLocalStorage(
-    newState: SavedCharacterData[]
+    newState: ClippyCharacterData[]
   ) {
     localStorage.setItem(SAVED_CHARACTERS_DATA_KEY, JSON.stringify(newState));
     setSavedCharactersData(newState);
