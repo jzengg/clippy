@@ -27,6 +27,9 @@ function SelectedTextWidget({
   selectedDefinitionIdx,
   setSelectedDefinitionIdx,
 }: Props) {
+  if (selectedDefinitionIdx > definitionsData.length - 1) {
+    setSelectedDefinitionIdx(0);
+  }
   return (
     <div className="sticky">
       <div className="selected-character-header">
