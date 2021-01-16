@@ -39,6 +39,11 @@ function SelectedTextWidget({
     setSelectedDefinitionIdx(parseInt(e.target.value));
   }
 
+  const className = [
+    "save-character-button",
+    isCharacterSavable ? "hoverable" : "disabled-button",
+  ].join(" ");
+
   return (
     <div className="sticky">
       <div className="selected-character-header">
@@ -50,10 +55,10 @@ function SelectedTextWidget({
         </h3>
         <button
           disabled={!isCharacterSavable}
-          className={isCharacterSavable ? "hoverable" : "disabled-button"}
+          className={className}
           onClick={handleSaveCharacter}
         >
-          Save Character
+          Save
         </button>
       </div>
       <h3>Pinyin & Meaning</h3>

@@ -119,13 +119,13 @@ button:active {
 
 .saved-character-row {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
 .saved-character-item {
   cursor: pointer;
   font-size: 24px;
-  margin-bottom: 4px;
 }
 
 .hoverable:hover {
@@ -145,11 +145,13 @@ button:active {
   font-size: 36px;
   padding: 8px;
   border: 1px dotted grey;
-  margin-right: 4px;
+  margin-right: 8px;
 }
 
 .selected-character-header {
   margin-bottom: 8px;
+  display: flex;
+  align-items: center;
 }
 
 .component-container {
@@ -185,11 +187,12 @@ button:active {
   margin-bottom: 8px;
 }
 
-.remove-saved-character-button {
+.save-character-button {
+  background-color: rgb(27, 116, 228);
+  color: white;
 }
 
-.prepare-download-button {
-  margin-bottom: 8px;
+.remove-saved-character-button {
 }
 
 .definition-row {
