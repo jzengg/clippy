@@ -11,9 +11,11 @@ type Props = {
   handleSaveCharacter: () => void;
   selectedDefinitionIdx: number;
   setSelectedDefinitionIdx: (idx: number) => void;
+  isCharacterSavable: boolean;
 };
 
 function SelectedTextWidget({
+  isCharacterSavable,
   selectedCharacterData: {
     simplified,
     traditional,
@@ -46,7 +48,11 @@ function SelectedTextWidget({
             traditional={traditional}
           />
         </h3>
-        <button className="hoverable" onClick={handleSaveCharacter}>
+        <button
+          disabled={!isCharacterSavable}
+          className={isCharacterSavable ? "hoverable" : "disabled-button"}
+          onClick={handleSaveCharacter}
+        >
           Save Character
         </button>
       </div>

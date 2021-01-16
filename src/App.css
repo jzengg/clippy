@@ -132,6 +132,10 @@ button:active {
   transform: scale(1.05);
 }
 
+.disabled-button {
+  cursor: not-allowed;
+}
+
 .saved-character-highlighted {
   color: red;
 }

@@ -62,13 +62,13 @@ export default function Clippy() {
     localStorage.setItem(SAVED_CHARACTERS_DATA_KEY, JSON.stringify(newState));
     setSavedCharactersData(newState);
   }
+  const isSelectedCharacterSavable =
+    selectedCharacterData != null &&
+    !savedCharactersData
+      .map((data) => data.simplified)
+      .includes(selectedCharacterData?.simplified ?? "");
   function saveSelectedCharacter() {
-    if (
-      selectedCharacterData != null &&
-      !savedCharactersData
-        .map((data) => data.simplified)
-        .includes(selectedCharacterData.simplified)
-    ) {
+    if (selectedCharacterData != null && isSelectedCharacterSavable) {
       const newState = [...savedCharactersData, { ...selectedCharacterData }];
       setSavedCharactersDataWithLocalStorage(newState);
     }
@@ -104,6 +104,7 @@ export default function Clippy() {
       <div className="grid-col">
         {selectedCharacterData != null && (
           <SelectedTextWidget
+            isCharacterSavable={isSelectedCharacterSavable}
             selectedDefinitionIdx={selectedDefinitionIdx}
             setSelectedDefinitionIdx={setSelectedDefinitionIdx}
             selectedCharacterData={selectedCharacterData}
