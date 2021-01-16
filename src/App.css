@@ -120,13 +120,16 @@ button:active {
 .saved-character-row {
   display: flex;
   justify-content: space-between;
-  /* align-content: center; */
 }
 
 .saved-character-item {
   cursor: pointer;
   font-size: 24px;
   margin-bottom: 4px;
+}
+
+.hoverable:hover {
+  transform: scale(1.05);
 }
 
 .saved-character-highlighted {

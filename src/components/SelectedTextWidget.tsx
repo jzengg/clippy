@@ -46,7 +46,9 @@ function SelectedTextWidget({
             traditional={traditional}
           />
         </h3>
-        <button onClick={handleSaveCharacter}>Save Character</button>
+        <button className="hoverable" onClick={handleSaveCharacter}>
+          Save Character
+        </button>
       </div>
       <h3>Pinyin & Meaning</h3>
       <DefinitionList

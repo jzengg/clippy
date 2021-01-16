@@ -34,7 +34,7 @@ function SavedCharacterList({
           <div className="saved-characters-container">
             {charactersData.map(
               ({ simplified, traditional, definitionIdx }, idx) => {
-                const classNames = ["saved-character-items"];
+                const classNames = ["saved-character-item", "hoverable"];
                 if (simplified === selectedText) {
                   classNames.push("saved-character-highlighted");
                 }
@@ -51,7 +51,7 @@ function SavedCharacterList({
                       />
                     </span>
                     <button
-                      className="remove-saved-character-button"
+                      className="remove-saved-character-button hoverable"
                       onClick={() => handleRemove(idx)}
                     >
                       X
@@ -61,7 +61,10 @@ function SavedCharacterList({
               }
             )}
           </div>
-          <button className="prepare-download-button" onClick={downloadFile}>
+          <button
+            className="prepare-download-button hoverable"
+            onClick={downloadFile}
+          >
             Export TSV
           </button>
         </>
