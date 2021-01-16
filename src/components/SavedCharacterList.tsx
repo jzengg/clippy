@@ -34,15 +34,16 @@ function SavedCharacterList({
           <div className="saved-characters-container">
             {charactersData.map(
               ({ simplified, traditional, definitionIdx }, idx) => {
+                const classNames = ["saved-character-items"];
+                if (simplified === selectedText) {
+                  classNames.push("saved-character-highlighted");
+                }
+                const className = classNames.join(" ");
                 return (
                   <div key={idx} className="saved-character-row">
                     <span
                       onClick={() => handleClickChar(simplified, definitionIdx)}
-                      className={`saved-character-item${
-                        simplified === selectedText
-                          ? " saved-character-highlighted"
-                          : ""
-                      }`}
+                      className={className}
                     >
                       <CharacterWithVariation
                         simplified={simplified}
@@ -61,7 +62,7 @@ function SavedCharacterList({
             )}
           </div>
           <button className="prepare-download-button" onClick={downloadFile}>
-            Export
+            Export TSV
           </button>
         </>
       )}

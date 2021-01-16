@@ -1,13 +1,13 @@
 import "./App.css";
-import ChineseEditor from "./components/ChineseEditor";
 import React from "react";
 import hanzi from "hanzi";
+import Clippy from "./components/Clippy";
 
 function App() {
   React.useEffect(() => hanzi.start(), []);
   return (
     <div className="App">
-      <ChineseEditor />
+      <Clippy />
     </div>
   );
 }
