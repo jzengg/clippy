@@ -1,4 +1,6 @@
 import hanzi from "hanzi";
+import pinyinize from "pinyinize";
+
 import {
   DecomposeData,
   DefinitionData,
@@ -23,6 +25,17 @@ export function getExampleUsages(
   return hanzi.getExamples(character);
 }
 
+function convertToneNumberToMark(word: string) {
+  return pinyinize(word.replace("5", ""));
+}
+
+function cleanDefinitionData(definitionData: DefinitionData): DefinitionData {
+  return {
+    ...definitionData,
+    pinyin: convertToneNumberToMark(definitionData.pinyin),
+  };
+}
+
 export function getSavedCharacterData(
   text: string,
   definitionIdx: number
@@ -41,7 +54,7 @@ export function getSavedCharacterData(
   const seenDefinitions = new Set();
   rawDefinitionsData.slice(0, 10).forEach((definitionData) => {
     if (!seenDefinitions.has(definitionData.definition)) {
-      definitionsData.push(definitionData);
+      definitionsData.push(cleanDefinitionData(definitionData));
     } else {
       seenDefinitions.add(definitionData.definition);
     }
@@ -51,9 +64,14 @@ export function getSavedCharacterData(
     definitionsData
       .map((data) => data.traditional)
       .find((char) => char != simplified) ?? null;
-  const examples = getExampleUsages(character);
-  const highFreqExamples = examples?.[0]?.slice(0, 3) ?? [];
-  const mediumFreqExamples = examples?.[1]?.slice(0, 3) ?? [];
+  const examples = getExampleUsages(character)?.map(
+    (exampleData) =>
+      exampleData
+        ?.slice(0, 3)
+        ?.map((example) => cleanDefinitionData(example)) ?? []
+  );
+  const [highFreqExamples, mediumFreqExamples] = examples;
+
   return {
     simplified,
     traditional,
