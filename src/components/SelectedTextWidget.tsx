@@ -32,6 +32,12 @@ function SelectedTextWidget({
       setSelectedDefinitionIdx(0);
     }
   }, [definitionsData, selectedDefinitionIdx]);
+
+  const handleSelectDefinition = React.useCallback(
+    (e: React.BaseSyntheticEvent) =>
+      setSelectedDefinitionIdx(parseInt(e.target.value)),
+    [setSelectedDefinitionIdx]
+  );
   return (
     <div className="sticky">
       <div className="selected-character-header">
@@ -46,7 +52,7 @@ function SelectedTextWidget({
       <h3>Pinyin & Meaning</h3>
       <DefinitionList
         selectedDefinitionIdx={selectedDefinitionIdx}
-        handleSelectDefinition={setSelectedDefinitionIdx}
+        handleSelectDefinition={handleSelectDefinition}
         definitions={definitionsData}
       />
       <h3>

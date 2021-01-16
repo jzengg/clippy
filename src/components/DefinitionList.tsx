@@ -3,7 +3,7 @@ import { DefinitionData } from "../types/interfaces";
 
 type Props = {
   definitions: DefinitionData[];
-  handleSelectDefinition: (idx: number) => void;
+  handleSelectDefinition: (e: React.BaseSyntheticEvent) => void;
   selectedDefinitionIdx: number;
 };
 
@@ -15,18 +15,18 @@ function DefinitionList({
   return (
     <div className="definition-container">
       {definitions.map((definitionData, idx) => {
-        const content = `${definitionData.pinyin} - ${definitionData.definition}`;
         return (
-          <div
-            className="definition-row"
-            onClick={() => handleSelectDefinition(idx)}
-            key={idx}
-          >
-            {selectedDefinitionIdx === idx ? (
-              <div className="selected-definition">{content}</div>
-            ) : (
-              content
-            )}
+          <div className="definition-row" key={idx}>
+            <label>
+              <input
+                onChange={handleSelectDefinition}
+                checked={selectedDefinitionIdx === idx}
+                type="radio"
+                value={idx}
+                className="selected-definition"
+              />
+              {`${definitionData.pinyin} - ${definitionData.definition}`}
+            </label>
           </div>
         );
       })}

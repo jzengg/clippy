@@ -174,12 +174,6 @@ button:active {
   margin-bottom: 8px;
 }
 
-.definition-row {
-  cursor: pointer;
-  margin-bottom: 4px;
-  margin-left: 16px;
-}
-
 .saved-characters-header {
   margin-bottom: 8px;
 }
@@ -191,10 +185,12 @@ button:active {
   margin-bottom: 8px;
 }
 
+.definition-row {
+  margin-left: 16px;
+}
 .selected-definition {
-  display: contents;
+  margin-right: 8px;
   padding: 4px;
-  color: blue;
 }
 
 .App {
