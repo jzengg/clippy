@@ -42,20 +42,6 @@ export default function Clippy() {
       ? getCharacterData(selectedText, selectedDefinitionIdx)
       : null;
 
-  const onEditorChange = React.useCallback(
-    (newEditorState) => {
-      const selectionText = getSelectionText(newEditorState)?.trim();
-      setSelectedText(selectionText);
-      setEditorState(newEditorState);
-      const contentState = newEditorState.getCurrentContent();
-      if (contentState !== editorState.getCurrentContent()) {
-        const serializedContent = JSON.stringify(convertToRaw(contentState));
-        localStorage.setItem(SAVED_EDITOR_STATE_KEY, serializedContent);
-      }
-    },
-    [editorState, setEditorState]
-  );
-
   function setSavedCharactersDataWithLocalStorage(
     newState: ClippyCharacterData[]
   ) {
@@ -67,6 +53,7 @@ export default function Clippy() {
     !savedCharactersData
       .map((data) => data.simplified)
       .includes(selectedCharacterData?.simplified ?? "");
+
   function saveSelectedCharacter() {
     if (selectedCharacterData != null && isSelectedCharacterSavable) {
       const newState = [...savedCharactersData, { ...selectedCharacterData }];
@@ -78,6 +65,17 @@ export default function Clippy() {
       (_char, idx) => idx !== indexToRemove
     );
     setSavedCharactersDataWithLocalStorage(newState);
+  }
+
+  function onEditorChange(newEditorState: EditorState) {
+    const selectionText = getSelectionText(newEditorState)?.trim();
+    setSelectedText(selectionText);
+    setEditorState(newEditorState);
+    const contentState = newEditorState.getCurrentContent();
+    if (contentState !== editorState.getCurrentContent()) {
+      const serializedContent = JSON.stringify(convertToRaw(contentState));
+      localStorage.setItem(SAVED_EDITOR_STATE_KEY, serializedContent);
+    }
   }
 
   return (
