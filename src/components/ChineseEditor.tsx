@@ -75,7 +75,6 @@ export default function ChineseEditor() {
         : [];
     return defaultSavedCharactersData;
   });
-  const [exportData, setExportData] = React.useState<string | null>(null);
   const [selectedDefinitionIdx, setSelectedDefinitionIdx] = React.useState(0);
 
   const selectedCharacterData =
@@ -92,7 +91,6 @@ export default function ChineseEditor() {
       const newState = [...savedCharactersData, { ...selectedCharacterData }];
       localStorage.setItem(SAVED_CHARACTERS_DATA_KEY, JSON.stringify(newState));
       setSavedCharactersData(newState);
-      setExportData(null);
     }
   }
   function removeSavedCharacter(indexToRemove: number) {
@@ -101,7 +99,6 @@ export default function ChineseEditor() {
     );
     localStorage.setItem(SAVED_CHARACTERS_DATA_KEY, JSON.stringify(newState));
     setSavedCharactersData(newState);
-    setExportData(null);
   }
 
   function handleKeyCommand(command: string): DraftHandleValue {
@@ -136,8 +133,6 @@ export default function ChineseEditor() {
           setSelectedText={setSelectedText}
           handleRemove={removeSavedCharacter}
           charactersData={savedCharactersData}
-          setExportData={setExportData}
-          exportData={exportData}
         />
       </div>
       <div className="grid-col-editor">
