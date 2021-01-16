@@ -42,12 +42,12 @@ export function getSavedCharacterData(
 ): SavedCharacterData {
   const decomposeData = decomposeCharacter(text);
   const character = decomposeData.character;
-  const basicComponents = (decomposeData?.components1 ?? []).filter(
-    (component) => component !== "No glyph available"
-  );
-  const radicalComponents = (decomposeData?.components2 ?? []).filter(
-    (component) => component !== "No glyph available"
-  );
+  const basicComponents = (decomposeData?.components1 ?? [])
+    .filter((component) => component !== "No glyph available")
+    .map((component) => ({ component, meaning: getRadicalMeaning(component) }));
+  const radicalComponents = (decomposeData?.components2 ?? [])
+    .filter((component) => component !== "No glyph available")
+    .map((component) => ({ component, meaning: getRadicalMeaning(component) }));
   // filter out random duplicates
   const rawDefinitionsData = definitionLookup(text) || [];
   const definitionsData: DefinitionData[] = [];
@@ -71,20 +71,13 @@ export function getSavedCharacterData(
         ?.map((example) => cleanDefinitionData(example)) ?? []
   );
   const [highFreqExamples, mediumFreqExamples] = examples;
-
   return {
     simplified,
     traditional,
     definitionsData,
     definitionIdx,
-    basicComponents: basicComponents.map((component) => ({
-      component,
-      meaning: getRadicalMeaning(component),
-    })),
-    radicalComponents: radicalComponents.map((component) => ({
-      component,
-      meaning: getRadicalMeaning(component),
-    })),
+    basicComponents,
+    radicalComponents,
     highFreqExamples,
     mediumFreqExamples,
   };

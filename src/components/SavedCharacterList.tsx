@@ -94,7 +94,7 @@ function SavedCharacterList({
 
   return (
     <div className="sticky">
-      <h3 className="saved-characters-header">Saved Characters</h3>
+      <h3 className="saved-characters-header">Saved</h3>
       {charactersData.length > 0 && (
         <>
           <div className="saved-characters-container">
