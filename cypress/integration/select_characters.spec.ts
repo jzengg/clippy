@@ -67,8 +67,6 @@ context("Select Characters", () => {
       .typeInEditor("窗觉")
       .setSelection("觉")
       .type("{cmd+downarrow}")
-      // command to go beyond bounds of definitions is ignored
-      .type("{cmd+downarrow}")
       .type("{cmd+s}");
 
     // it should show up in the saved words list
@@ -108,6 +106,25 @@ context("Select Characters", () => {
 
     // switch to character with 2 definitions
     cy.dataCy("editor").typeInEditor("觉").setSelection("觉");
+    cy.dataCy("definition-list")
+      .get('[type="radio"]')
+      .first()
+      .should("be.checked");
+
+    // add character with only one definition, can't go above only definition
+    cy.dataCy("editor")
+      .typeInEditor("窗")
+      .setSelection("窗")
+      .type("{cmd+uparrow}");
+    cy.dataCy("definition-list")
+      .get('[type="radio"]')
+      .first()
+      .should("be.checked");
+    // can't go below only definition
+    cy.dataCy("editor")
+      .typeInEditor("窗")
+      .setSelection("窗")
+      .type("{cmd+downarrow}");
     cy.dataCy("definition-list")
       .get('[type="radio"]')
       .first()
