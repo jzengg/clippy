@@ -14,7 +14,7 @@ function DefinitionList({
 }: Props) {
   return (
     <div className="definition-container" data-cy="definition-list">
-      {definitions.map((definitionData, idx) => {
+      {definitions.map(({ pinyin, definition }, idx) => {
         return (
           <div className="definition-row" key={idx}>
             <label>
@@ -25,7 +25,7 @@ function DefinitionList({
                 value={idx}
                 className="selected-definition"
               />
-              {`${definitionData.pinyin} - ${definitionData.definition}`}
+              {`${pinyin} - ${definition}`}
             </label>
           </div>
         );

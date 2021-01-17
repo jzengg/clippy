@@ -1,31 +1,18 @@
 context("Select Characters", () => {
-  const text = "窗外的麻雀 在電線桿上多嘴{enter}妳說這一句 很有夏天的感覺";
+  const text = "窗外的麻雀 在電線桿上多嘴{enter}妳說這一句 很有夏天的感觉";
   beforeEach(() => {
     cy.visit("/");
   });
 
-  it("can add text to middle panel", () => {
+  it("can add text to editor", () => {
     cy.dataCy("editor").typeInEditor(text);
   });
 
-  it("can select text to get more information", () => {
+  it("can select text to get more information and can save characters", () => {
     // when nothing is selected, the definition list should be empty
     cy.dataCy("definition-list").should("not.exist");
 
-    // highlight text https://github.com/cypress-io/cypress/issues/2839
-    cy.dataCy("editor")
-      .typeInEditor("窗")
-      .trigger("mousedown")
-      .then(($el) => {
-        const el = $el[0];
-        const document = el.ownerDocument;
-        const range = document.createRange();
-        range.selectNodeContents(el);
-        document.getSelection().removeAllRanges(range);
-        document.getSelection().addRange(range);
-      })
-      .trigger("mouseup");
-    cy.document().trigger("selectionchange");
+    cy.dataCy("editor").typeInEditor("窗").setSelection("窗");
 
     // definition list should now show up
     cy.dataCy("definition-list");
@@ -33,7 +20,38 @@ context("Select Characters", () => {
     // save it
     cy.dataCy("save-button").click();
 
-    // it should show up in the saved words list
+    // word should be in saved character list
     cy.dataCy("saved-word-窗");
+
+    // editor text and saved characters should persist through reloads
+    cy.reload();
+    cy.dataCy("saved-word-窗");
+    cy.dataCy("editor");
+  });
+
+  it("can save selected definition of a character", () => {
+    // 觉 is a character with two definitions
+    cy.dataCy("editor").typeInEditor("窗觉").setSelection("觉");
+
+    // choose second definition
+    cy.dataCy("definition-list").get('[type="radio"]').last().check();
+
+    // save it
+    cy.dataCy("save-button").click();
+
+    // it should show up in the saved words list
+    cy.dataCy("saved-word-觉");
+
+    // change selection
+    cy.dataCy("editor").setSelection("窗");
+
+    // click saved character for which we chose second definition
+    cy.dataCy("saved-word-觉").click();
+
+    // second definition should be checked
+    cy.dataCy("definition-list")
+      .get('[type="radio"]')
+      .last()
+      .should("be.checked");
   });
 });

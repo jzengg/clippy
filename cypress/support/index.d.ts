@@ -12,10 +12,10 @@ declare namespace Cypress {
      */
     typeInEditor(value: string): Chainable<Element>;
 
-    // setSelection(
-    //   subject: Element,
-    //   query: string,
-    //   endQuery: string
-    // ): Chainable<Element>;
+    /**
+     * Custom command to naively select (highlight) based on text matching
+     * @example cy.typeInEditor('hello!').setSelection('hello')
+     */
+    setSelection(value: string): Chainable<Element>;
   }
 }
