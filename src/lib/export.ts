@@ -26,7 +26,7 @@ function getExampleTexts(examples: DefinitionData[]) {
 }
 
 function convertCharactersDataToTSV(charactersData: ClippyCharacterData[]) {
-  const csv = charactersData.map(
+  const data = charactersData.map(
     ({
       simplified,
       traditional,
@@ -54,7 +54,22 @@ function convertCharactersDataToTSV(charactersData: ClippyCharacterData[]) {
       ].join("\t");
     }
   );
-  return csv.join("\n");
+  const header =
+    "# " +
+    [
+      "simplified",
+      "pinyin",
+      "definition",
+      "traditional",
+      "basic components",
+      "radical components",
+      "example1",
+      "example2",
+      "example3",
+    ].join("\t");
+  const tsv = [header, ...data].join("\n");
+  console.log(tsv);
+  return tsv;
 }
 
 // impl cribbed from https://github.com/kennethjiang/js-file-download
