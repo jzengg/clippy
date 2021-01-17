@@ -97,7 +97,7 @@ export default function Clippy() {
           />
         )}
       </div>
-      <div className="grid-col-editor">
+      <div className="grid-col-editor" data-cy="editor">
         <ClippyEditor
           saveSelectedCharacter={saveSelectedCharacter}
           selectedCharacterData={selectedCharacterData}

@@ -42,6 +42,7 @@ function SavedCharacterList({
                 <span
                   onClick={() => handleClickChar(simplified, definitionIdx)}
                   className={className}
+                  data-cy={`saved-word-${simplified}`}
                 >
                   <CharacterWithVariation
                     simplified={simplified}

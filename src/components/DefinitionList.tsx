@@ -13,7 +13,7 @@ function DefinitionList({
   handleSelectDefinition,
 }: Props) {
   return (
-    <div className="definition-container">
+    <div className="definition-container" data-cy="definition-list">
       {definitions.map((definitionData, idx) => {
         return (
           <div className="definition-row" key={idx}>
