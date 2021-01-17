@@ -56,6 +56,7 @@ function SelectedTextWidget({
           disabled={!isCharacterSavable}
           className={className}
           onClick={handleSaveCharacter}
+          data-cy="save-button"
         >
           Save
         </button>
