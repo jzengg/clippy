@@ -60,4 +60,57 @@ context("Select Characters", () => {
       .last()
       .should("be.checked");
   });
+
+  it("can use keyboard shortcuts for saving a character and choosing definition", () => {
+    // 觉 is a character with two definitions, choose second definition and save
+    cy.dataCy("editor")
+      .typeInEditor("窗觉")
+      .setSelection("觉")
+      .type("{cmd+downarrow}")
+      // command to go beyond bounds of definitions is ignored
+      .type("{cmd+downarrow}")
+      .type("{cmd+s}");
+
+    // it should show up in the saved words list
+    cy.dataCy("saved-word-觉");
+
+    // second definition should be checked
+    cy.dataCy("definition-list")
+      .get('[type="radio"]')
+      .last()
+      .should("be.checked");
+  });
+
+  it("prevents duplicates in saved characters list", () => {
+    // save character
+    cy.dataCy("editor").typeInEditor("觉").setSelection("觉");
+    cy.dataCy("save-button").click();
+
+    // it should show up in the saved words list
+    cy.dataCy("saved-word-觉");
+
+    // save button should be disabled
+    cy.dataCy("save-button").should("be.disabled");
+
+    // save shortcut should do nothing
+    cy.dataCy("editor").typeInEditor("觉").setSelection("觉").type("{cmd+s}");
+
+    // should only have 1 character saved
+    cy.get(".saved-character-row").should("have.length", 1);
+  });
+
+  it("prevents invalid definition selection", () => {
+    // type character with 3 definitions
+    cy.dataCy("editor").typeInEditor("的").setSelection("的");
+
+    // choose third definition
+    cy.dataCy("definition-list").get('[type="radio"]').last().check();
+
+    // switch to character with 2 definitions
+    cy.dataCy("editor").typeInEditor("觉").setSelection("觉");
+    cy.dataCy("definition-list")
+      .get('[type="radio"]')
+      .first()
+      .should("be.checked");
+  });
 });
