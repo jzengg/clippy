@@ -43,7 +43,6 @@ function SelectedTextWidget({
     "save-character-button",
     isCharacterSavable ? "hoverable" : "disabled-button",
   ].join(" ");
-
   return (
     <div className="sticky">
       <div className="selected-character-header">

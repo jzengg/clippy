@@ -1,5 +1,5 @@
 export interface DefinitionData {
-  simplified: string;
+  simplified: string | null;
   traditional: string | null;
   definition: string;
   pinyin: string;
@@ -11,7 +11,7 @@ export interface ComponentData {
 }
 
 export interface ClippyCharacterData {
-  simplified: string;
+  simplified: string | null;
   traditional: string | null;
   definitionsData: DefinitionData[];
   definitionIdx: number;

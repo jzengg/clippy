@@ -22,7 +22,7 @@ function SavedCharacterList({
   function downloadFile() {
     downloadCharactersData(charactersData);
   }
-  function handleClickChar(char: string, idx: number) {
+  function handleClickChar(char: string | null, idx: number) {
     setSelectedText(char);
     setSelectedDefinitionIdx(idx);
   }

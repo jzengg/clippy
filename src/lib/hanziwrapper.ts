@@ -59,7 +59,7 @@ export function getCharacterData(
       seenDefinitions.add(definitionData.definition);
     }
   });
-  const simplified = definitionsData?.[0]?.simplified;
+  const simplified = definitionsData?.[0]?.simplified ?? null;
   const traditional =
     definitionsData
       .map((data) => data.traditional)

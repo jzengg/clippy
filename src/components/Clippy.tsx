@@ -108,7 +108,8 @@ export default function Clippy() {
         />
       </div>
       <div className="grid-col">
-        {selectedCharacterData != null ? (
+        {selectedCharacterData != null &&
+        selectedCharacterData.simplified != null ? (
           <SelectedTextWidget
             isCharacterSavable={isSelectedCharacterSavable}
             selectedDefinitionIdx={selectedDefinitionIdx}

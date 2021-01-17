@@ -1,7 +1,7 @@
 import React from "react";
 
 type Props = {
-  simplified: string;
+  simplified: string | null;
   traditional: string | null;
 };
 function CharacterWithVariation({ simplified, traditional }: Props) {
