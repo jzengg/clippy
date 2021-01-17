@@ -4,6 +4,8 @@ import {
   ClippyCharacterData,
 } from "../types/interfaces";
 
+const DELIMITER = "\t";
+
 function getComponentsText(components: ComponentData[]) {
   return components
     .map(
@@ -26,19 +28,17 @@ function getExampleTexts(examples: DefinitionData[]) {
 }
 
 function convertCharactersDataToTSV(charactersData: ClippyCharacterData[]) {
-  const data = charactersData.map(
+  const characterRows = charactersData.map(
     ({
       simplified,
       traditional,
       definitionsData,
       definitionIdx,
-      basicComponents,
       radicalComponents,
       highFreqExamples,
       mediumFreqExamples,
     }) => {
       const radicalComponentsText = getComponentsText(radicalComponents);
-      const basicComponentsText = getComponentsText(basicComponents);
       const definitionData = definitionsData[definitionIdx];
       const { definition, pinyin } = definitionData;
       const examples = [...highFreqExamples, ...mediumFreqExamples];
@@ -48,28 +48,24 @@ function convertCharactersDataToTSV(charactersData: ClippyCharacterData[]) {
         pinyin,
         definition,
         traditional,
-        basicComponentsText,
         radicalComponentsText,
         ...exampleTexts,
-      ].join("\t");
+      ].join(DELIMITER);
     }
   );
-  const header =
-    "# " +
-    [
-      "simplified",
-      "pinyin",
-      "definition",
-      "traditional",
-      "basic components",
-      "radical components",
-      "example1",
-      "example2",
-      "example3",
-    ].join("\t");
-  const tsv = [header, ...data].join("\n");
-  console.log(tsv);
-  return tsv;
+  const header = [
+    "#",
+    "simplified",
+    "pinyin",
+    "definition",
+    "traditional",
+    "radical components",
+    "example1",
+    "example2",
+    "example3",
+  ].join(DELIMITER);
+  const rows = [header, ...characterRows];
+  return rows.join("\n");
 }
 
 // impl cribbed from https://github.com/kennethjiang/js-file-download

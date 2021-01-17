@@ -20,7 +20,6 @@ function SelectedTextWidget({
     simplified,
     traditional,
     definitionsData,
-    basicComponents,
     radicalComponents,
     mediumFreqExamples,
     highFreqExamples,
@@ -66,9 +65,6 @@ function SelectedTextWidget({
         handleSelectDefinition={handleSelectDefinition}
         definitions={definitionsData}
       />
-      <h3>
-        Basic <ComponentList components={basicComponents} />
-      </h3>
       <h3>
         Radicals <ComponentList components={radicalComponents} />
       </h3>

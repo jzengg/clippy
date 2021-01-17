@@ -42,9 +42,6 @@ export function getCharacterData(
 ): ClippyCharacterData {
   const decomposeData = decomposeCharacter(text);
   const character = decomposeData.character;
-  const basicComponents = (decomposeData?.components1 ?? [])
-    .filter((component) => component !== "No glyph available")
-    .map((component) => ({ component, meaning: getRadicalMeaning(component) }));
   const radicalComponents = (decomposeData?.components2 ?? [])
     .filter((component) => component !== "No glyph available")
     .map((component) => ({ component, meaning: getRadicalMeaning(component) }));
@@ -76,7 +73,6 @@ export function getCharacterData(
     traditional,
     definitionsData,
     definitionIdx,
-    basicComponents,
     radicalComponents,
     highFreqExamples,
     mediumFreqExamples,

@@ -15,7 +15,6 @@ export interface ClippyCharacterData {
   traditional: string | null;
   definitionsData: DefinitionData[];
   definitionIdx: number;
-  basicComponents: ComponentData[];
   radicalComponents: ComponentData[];
   highFreqExamples: DefinitionData[];
   mediumFreqExamples: DefinitionData[];
