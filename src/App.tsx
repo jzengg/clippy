@@ -6,9 +6,12 @@ import Clippy from "./components/Clippy";
 function App() {
   React.useEffect(() => hanzi.start(), []);
   return (
-    <div className="App">
-      <Clippy />
-    </div>
+    <>
+      <h1 className="main-header red">Clippy</h1>
+      <div className="App">
+        <Clippy />
+      </div>
+    </>
   );
 }
 

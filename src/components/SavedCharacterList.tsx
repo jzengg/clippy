@@ -29,46 +29,42 @@ function SavedCharacterList({
   return (
     <div className="sticky">
       <h3 className="saved-characters-header">Saved</h3>
-      {charactersData.length > 0 && (
-        <>
-          <div className="saved-characters-container">
-            {charactersData.map(
-              ({ simplified, traditional, definitionIdx }, idx) => {
-                const classNames = ["saved-character-item", "hoverable"];
-                if (simplified === selectedText) {
-                  classNames.push("saved-character-highlighted");
-                }
-                const className = classNames.join(" ");
-                return (
-                  <div key={idx} className="saved-character-row">
-                    <span
-                      onClick={() => handleClickChar(simplified, definitionIdx)}
-                      className={className}
-                    >
-                      <CharacterWithVariation
-                        simplified={simplified}
-                        traditional={traditional}
-                      />
-                    </span>
-                    <button
-                      className="remove-saved-character-button hoverable"
-                      onClick={() => handleRemove(idx)}
-                    >
-                      X
-                    </button>
-                  </div>
-                );
-              }
-            )}
-          </div>
-          <button
-            className="prepare-download-button hoverable"
-            onClick={downloadFile}
-          >
-            Export TSV
-          </button>
-        </>
-      )}
+      <div className="saved-characters-container">
+        {charactersData.map(
+          ({ simplified, traditional, definitionIdx }, idx) => {
+            const classNames = ["saved-character-item", "hoverable"];
+            if (simplified === selectedText) {
+              classNames.push("saved-character-highlighted");
+            }
+            const className = classNames.join(" ");
+            return (
+              <div key={idx} className="saved-character-row">
+                <span
+                  onClick={() => handleClickChar(simplified, definitionIdx)}
+                  className={className}
+                >
+                  <CharacterWithVariation
+                    simplified={simplified}
+                    traditional={traditional}
+                  />
+                </span>
+                <button
+                  className="remove-saved-character-button hoverable"
+                  onClick={() => handleRemove(idx)}
+                >
+                  X
+                </button>
+              </div>
+            );
+          }
+        )}
+      </div>
+      <button
+        className="prepare-download-button hoverable"
+        onClick={downloadFile}
+      >
+        Export To TSV
+      </button>
     </div>
   );
 }

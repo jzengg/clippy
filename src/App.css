@@ -94,6 +94,18 @@ button:active {
 }
 /* Button styles end */
 
+.main-header {
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px,
+    rgba(0, 0, 0, 0.05) 0px 1px 4px 0px, rgba(0, 0, 0, 0.05) 0px 2px 8px 0px;
+  display: flex;
+  background-color: white;
+  position: sticky;
+  z-index: 2;
+  top: 0px;
+  justify-content: center;
+  padding-bottom: 4px;
+}
+
 .grid-root {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 5fr) minmax(0, 3fr);
@@ -108,7 +120,12 @@ button:active {
 
 .sticky {
   position: sticky;
-  top: 18px;
+  top: 60px;
+}
+
+.placeholder-text {
+  color: #90949c;
+  font-weight: 400;
 }
 
 .saved-characters-container {
@@ -149,7 +166,7 @@ button:active {
 }
 
 .selected-character-header {
-  margin-bottom: 8px;
+  margin: 12px 0px;
   display: flex;
   align-items: center;
 }
@@ -184,12 +201,16 @@ button:active {
 }
 
 .saved-characters-header {
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .save-character-button {
   background-color: rgb(27, 116, 228);
   color: white;
+}
+
+.save-character-button:disabled {
+  opacity: 0.3;
 }
 
 .remove-saved-character-button {
@@ -204,7 +225,7 @@ button:active {
 }
 
 .App {
-  padding: 20px;
+  padding: 0px 20px 20px 20px;
   font-family: Helvetica;
   max-width: 1200px;
   margin: 0 auto;

@@ -7,6 +7,7 @@ import SelectedTextWidget from "./SelectedTextWidget";
 import SavedCharacterList from "./SavedCharacterList";
 import { getCharacterData } from "../lib/hanziwrapper";
 import { ClippyEditor } from "./ClippyEditor";
+import PlaceholderText from "./PlaceholderText";
 
 const SAVED_EDITOR_STATE_KEY = "clippySavedEditorState";
 const SAVED_CHARACTERS_DATA_KEY = "clippySavedCharactersData";
@@ -52,7 +53,7 @@ export default function Clippy() {
     selectedCharacterData != null &&
     !savedCharactersData
       .map((data) => data.simplified)
-      .includes(selectedCharacterData?.simplified ?? "");
+      .includes(selectedCharacterData.simplified);
 
   function saveSelectedCharacter() {
     if (selectedCharacterData != null && isSelectedCharacterSavable) {
@@ -81,13 +82,20 @@ export default function Clippy() {
   return (
     <div className="grid-root">
       <div className="grid-col-saved-characters">
-        <SavedCharacterList
-          selectedText={selectedText}
-          setSelectedDefinitionIdx={setSelectedDefinitionIdx}
-          setSelectedText={setSelectedText}
-          handleRemove={removeSavedCharacter}
-          charactersData={savedCharactersData}
-        />
+        {savedCharactersData.length > 0 ? (
+          <SavedCharacterList
+            selectedText={selectedText}
+            setSelectedDefinitionIdx={setSelectedDefinitionIdx}
+            setSelectedText={setSelectedText}
+            handleRemove={removeSavedCharacter}
+            charactersData={savedCharactersData}
+          />
+        ) : (
+          <PlaceholderText
+            title="Save a character"
+            text="Export saved characters to Anki"
+          />
+        )}
       </div>
       <div className="grid-col-editor">
         <ClippyEditor
@@ -100,13 +108,18 @@ export default function Clippy() {
         />
       </div>
       <div className="grid-col">
-        {selectedCharacterData != null && (
+        {selectedCharacterData != null ? (
           <SelectedTextWidget
             isCharacterSavable={isSelectedCharacterSavable}
             selectedDefinitionIdx={selectedDefinitionIdx}
             setSelectedDefinitionIdx={setSelectedDefinitionIdx}
             selectedCharacterData={selectedCharacterData}
             handleSaveCharacter={saveSelectedCharacter}
+          />
+        ) : (
+          <PlaceholderText
+            title="See more information"
+            text="Select a character to get started"
           />
         )}
       </div>
