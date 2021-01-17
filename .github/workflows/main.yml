@@ -10,5 +10,6 @@ jobs:
       - name: Cypress tests
         uses: cypress-io/github-action@v2
         with:
+          browser: chrome
           start: npm start
           wait-on: http://localhost:3000/clippy
