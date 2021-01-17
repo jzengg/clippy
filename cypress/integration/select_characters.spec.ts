@@ -27,6 +27,10 @@ context("Select Characters", () => {
     cy.reload();
     cy.dataCy("saved-word-窗");
     cy.dataCy("editor");
+
+    // can remove saved character
+    cy.get(".remove-saved-character-button").click();
+    cy.dataCy("saved-word-窗").should("not.exist");
   });
 
   it("can save selected definition of a character", () => {
@@ -46,7 +50,9 @@ context("Select Characters", () => {
     cy.dataCy("editor").setSelection("窗");
 
     // click saved character for which we chose second definition
-    cy.dataCy("saved-word-觉").click();
+    cy.dataCy("saved-word-觉")
+      .should("have.class", "saved-character-highlighted")
+      .click();
 
     // second definition should be checked
     cy.dataCy("definition-list")
