@@ -1,4 +1,4 @@
-name: Test and Deploy
+name: Continuous Deployment
 on:
   push:
     branches: main
@@ -9,7 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: run tests
+      - name: Run tests
         uses: cypress-io/github-action@v2
         with:
           wait-on: http://localhost:3000/clippy
