@@ -1,12 +1,8 @@
 name: Clippy integration tests
 on: [push]
 jobs:
-  parallel-runs-across-platforms:
-    name: Run integration tests on every OS
-    strategy:
-      matrix:
-        os: ["ubuntu-latest", "macos-latest"]
-    runs-on: ${{ matrix.os }}
+  cypress-run:
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
