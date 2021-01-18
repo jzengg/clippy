@@ -1,7 +1,12 @@
 import React from "react";
-import { DraftHandleValue, Editor, EditorState } from "draft-js";
-import { ClippyCharacterData } from "../types/interfaces";
-import { getDefaultKeyBinding, KeyBindingUtil } from "draft-js";
+import {
+  DraftHandleValue,
+  Editor,
+  EditorState,
+  getDefaultKeyBinding,
+  KeyBindingUtil,
+} from "draft-js";
+import { ClippyCharacterData } from "types/interfaces";
 const { hasCommandModifier, isCtrlKeyCommand } = KeyBindingUtil;
 
 const SAVE_CHARACTER_COMMAND = "myeditor-save-character";

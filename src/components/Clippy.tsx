@@ -2,15 +2,15 @@ import React from "react";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { getSelectionText } from "draftjs-utils";
-import { ClippyCharacterData } from "../types/interfaces";
-import SelectedTextWidget from "./SelectedTextWidget";
-import SavedCharacterList from "./SavedCharacterList";
+import { ClippyCharacterData } from "types/interfaces";
+import SelectedTextWidget from "components/SelectedTextWidget";
+import SavedCharacterList from "components/SavedCharacterList";
 import {
   getCharacterData,
   getCharacterPrimaryAndAlternate,
-} from "../lib/hanziwrapper";
-import { ClippyEditor } from "./ClippyEditor";
-import PlaceholderText from "./PlaceholderText";
+} from "lib/hanziwrapper";
+import { ClippyEditor } from "components/ClippyEditor";
+import PlaceholderText from "components/PlaceholderText";
 import { clippyCharacterType } from "atoms/clippyCharacterType";
 import { useRecoilValue } from "recoil";
 

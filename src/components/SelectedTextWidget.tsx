@@ -1,11 +1,11 @@
 import React from "react";
 
-import ExampleWordList from "./ExampleWordList";
-import ComponentList from "./ComponentList";
-import DefinitionList from "./DefinitionList";
-import CharacterWithVariation from "./CharacterWithVariation";
-import { ClippyCharacterData } from "../types/interfaces";
-import CharacterTypeSelector from "./CharacterTypeSelector";
+import ExampleWordList from "components/ExampleWordList";
+import ComponentList from "components/ComponentList";
+import DefinitionList from "components/DefinitionList";
+import CharacterWithVariation from "components/CharacterWithVariation";
+import { ClippyCharacterData } from "types/interfaces";
+import CharacterTypeSelector from "components/CharacterTypeSelector";
 
 type Props = {
   selectedCharacterData: ClippyCharacterData;

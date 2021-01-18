@@ -1,6 +1,6 @@
 import React from "react";
-import { DefinitionData } from "../types/interfaces";
-import CharacterWithVariation from "./CharacterWithVariation";
+import { DefinitionData } from "types/interfaces";
+import CharacterWithVariation from "components/CharacterWithVariation";
 
 type Props = {
   examples: DefinitionData[];

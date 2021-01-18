@@ -1,5 +1,5 @@
 import React from "react";
-import { DefinitionData } from "../types/interfaces";
+import { DefinitionData } from "types/interfaces";
 
 type Props = {
   definitions: DefinitionData[];

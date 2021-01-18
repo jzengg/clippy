@@ -6,7 +6,7 @@ import {
   DefinitionData,
   ClippyCharacterData,
   RadicalDecompositionData,
-} from "../types/interfaces";
+} from "types/interfaces";
 
 export function getRadicalMeaning(character: string): string {
   return hanzi.getRadicalMeaning(character);

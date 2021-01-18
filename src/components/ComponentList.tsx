@@ -1,5 +1,5 @@
 import React from "react";
-import { ComponentData } from "../types/interfaces";
+import { ComponentData } from "types/interfaces";
 
 type Props = {
   components: ComponentData[];

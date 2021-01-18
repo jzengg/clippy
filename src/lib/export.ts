@@ -2,7 +2,7 @@ import {
   ComponentData,
   DefinitionData,
   ClippyCharacterData,
-} from "../types/interfaces";
+} from "types/interfaces";
 
 const DELIMITER = "\t";
 

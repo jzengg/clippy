@@ -1,8 +1,8 @@
 import React from "react";
-import { ClippyCharacterData } from "../types/interfaces";
+import { ClippyCharacterData } from "types/interfaces";
 
-import CharacterWithVariation from "./CharacterWithVariation";
-import { downloadCharactersData } from "../lib/export";
+import CharacterWithVariation from "components/CharacterWithVariation";
+import { downloadCharactersData } from "lib/export";
 import { getCharacterPrimaryAndAlternate } from "lib/hanziwrapper";
 import { clippyCharacterType } from "atoms/clippyCharacterType";
 import { useRecoilValue } from "recoil";

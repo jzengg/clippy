@@ -1,9 +1,9 @@
-import "./App.css";
+import "App.css";
 import React from "react";
 import hanzi from "hanzi";
-import Clippy from "./components/Clippy";
+import Clippy from "components/Clippy";
 import { RecoilRoot } from "recoil";
-import Header from "./components/Header";
+import Header from "components/Header";
 
 function App() {
   React.useEffect(() => hanzi.start(), []);
