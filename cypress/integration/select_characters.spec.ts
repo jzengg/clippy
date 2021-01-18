@@ -66,8 +66,8 @@ context("Select Characters", () => {
     cy.dataCy("editor")
       .typeInEditor("窗觉")
       .setSelection("觉")
-      .type("{cmd+downarrow}", { force: true })
-      .type("{cmd+s}", { force: true });
+      .type("{cmd+downarrow}")
+      .type("{cmd+s}");
 
     // it should show up in the saved words list
     cy.dataCy("saved-word-觉");
@@ -91,10 +91,7 @@ context("Select Characters", () => {
     cy.dataCy("save-button").should("be.disabled");
 
     // save shortcut should do nothing
-    cy.dataCy("editor")
-      .typeInEditor("觉")
-      .setSelection("觉")
-      .type("{cmd+s}", { force: true });
+    cy.dataCy("editor").typeInEditor("觉").setSelection("觉").type("{cmd+s}");
 
     // should only have 1 character saved
     cy.get(".saved-character-row").should("have.length", 1);
@@ -118,7 +115,7 @@ context("Select Characters", () => {
     cy.dataCy("editor")
       .typeInEditor("窗")
       .setSelection("窗")
-      .type("{cmd+uparrow}", { force: true });
+      .type("{cmd+uparrow}");
     cy.dataCy("definition-list")
       .get('[type="radio"]')
       .first()
@@ -127,7 +124,7 @@ context("Select Characters", () => {
     cy.dataCy("editor")
       .typeInEditor("窗")
       .setSelection("窗")
-      .type("{cmd+downarrow}", { force: true });
+      .type("{cmd+downarrow}");
     cy.dataCy("definition-list")
       .get('[type="radio"]')
       .first()
