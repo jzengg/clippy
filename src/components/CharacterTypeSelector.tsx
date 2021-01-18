@@ -14,21 +14,12 @@ export default function CharacterTypeSelector() {
   }
   return (
     <select
+      value={characterType}
       className="character-type-selector"
       onChange={handleChangeCharacterType}
     >
-      <option
-        selected={characterType === CharacterType.Simplified}
-        value={CharacterType.Simplified}
-      >
-        Simplified
-      </option>
-      <option
-        selected={characterType === CharacterType.Traditional}
-        value={CharacterType.Traditional}
-      >
-        Traditional
-      </option>
+      <option value={CharacterType.Simplified}>Simplified</option>
+      <option value={CharacterType.Traditional}>Traditional</option>
     </select>
   );
 }
