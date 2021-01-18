@@ -1,18 +1,22 @@
 import hanzi from "hanzi";
 import pinyinize from "pinyinize";
+import { CharacterType } from "src/atoms/clippyCharacterType";
 
 import {
-  DecomposeData,
   DefinitionData,
   ClippyCharacterData,
+  RadicalDecompositionData,
 } from "../types/interfaces";
 
 export function getRadicalMeaning(character: string): string {
   return hanzi.getRadicalMeaning(character);
 }
 
-export function decomposeCharacter(character: string): DecomposeData {
-  return hanzi.decompose(character);
+export function decomposeCharacterToRadicals(
+  character: string
+): RadicalDecompositionData {
+  // only get radical decomposition
+  return hanzi.decompose(character, 2);
 }
 
 export function definitionLookup(character: string): DefinitionData[] | null {
@@ -62,14 +66,19 @@ function filterDefinitionsData({
   return definitionsData;
 }
 
-export function getCharacterData(
-  text: string,
-  definitionIdx: number
-): ClippyCharacterData {
-  const decomposeData = decomposeCharacter(text);
+export function getCharacterData({
+  text,
+  definitionIdx,
+  characterType,
+}: {
+  text: string;
+  definitionIdx: number;
+  characterType: CharacterType;
+}): ClippyCharacterData {
+  const decomposeData = decomposeCharacterToRadicals(text);
   const character = decomposeData.character;
   const radicalComponents =
-    decomposeData?.components2
+    decomposeData.components
       .filter((component) => component !== "No glyph available")
       .map((component) => ({
         component,
@@ -81,10 +90,15 @@ export function getCharacterData(
     limit: 10,
   });
   const simplified = definitionsData?.[0]?.simplified ?? null;
+  // if the selected characterType is traditional, its definitionData.simplified
+  // will be the same as definitionData.traditional so we can take any traditional
+  // definition
   const traditional =
     definitionsData
       .map((data) => data.traditional)
-      .find((char) => char != simplified) ?? null;
+      .find((char) =>
+        characterType === CharacterType.Simplified ? char != simplified : true
+      ) ?? null;
   const examples =
     getExampleUsages(character)?.map((exampleData) =>
       filterDefinitionsData({ rawDefinitionsData: exampleData, limit: 3 })
@@ -99,4 +113,27 @@ export function getCharacterData(
     highFreqExamples,
     mediumFreqExamples,
   };
+}
+
+export function getCharacterPrimaryAndAlternate({
+  traditional,
+  simplified,
+  characterType,
+}: {
+  traditional: string | null;
+  simplified: string | null;
+  characterType: CharacterType;
+}) {
+  let characterPrimary, characterAlternate;
+  switch (characterType) {
+    case CharacterType.Simplified:
+      characterPrimary = simplified;
+      characterAlternate = traditional;
+      break;
+    case CharacterType.Traditional:
+      characterPrimary = traditional;
+      characterAlternate = simplified;
+      break;
+  }
+  return { characterPrimary, characterAlternate };
 }

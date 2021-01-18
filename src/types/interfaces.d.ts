@@ -20,8 +20,7 @@ export interface ClippyCharacterData {
   mediumFreqExamples: DefinitionData[];
 }
 
-export interface DecomposeData {
+export interface RadicalDecompositionData {
   character: string;
-  components1: string[];
-  components2: string[];
+  components: string[];
 }

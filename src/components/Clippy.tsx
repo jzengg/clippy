@@ -5,9 +5,14 @@ import { getSelectionText } from "draftjs-utils";
 import { ClippyCharacterData } from "../types/interfaces";
 import SelectedTextWidget from "./SelectedTextWidget";
 import SavedCharacterList from "./SavedCharacterList";
-import { getCharacterData } from "../lib/hanziwrapper";
+import {
+  getCharacterData,
+  getCharacterPrimaryAndAlternate,
+} from "../lib/hanziwrapper";
 import { ClippyEditor } from "./ClippyEditor";
 import PlaceholderText from "./PlaceholderText";
+import { clippyCharacterType } from "src/atoms/clippyCharacterType";
+import { useRecoilValue } from "recoil";
 
 const SAVED_EDITOR_STATE_KEY = "clippySavedEditorState";
 const SAVED_CHARACTERS_DATA_KEY = "clippySavedCharactersData";
@@ -37,10 +42,15 @@ export default function Clippy() {
         : [];
     return defaultSavedCharactersData;
   });
+  const characterType = useRecoilValue(clippyCharacterType);
   const [selectedDefinitionIdx, setSelectedDefinitionIdx] = React.useState(0);
   const selectedCharacterData =
     selectedText != null && selectedText !== ""
-      ? getCharacterData(selectedText, selectedDefinitionIdx)
+      ? getCharacterData({
+          text: selectedText,
+          definitionIdx: selectedDefinitionIdx,
+          characterType,
+        })
       : null;
 
   function setSavedCharactersDataWithLocalStorage(
@@ -49,11 +59,25 @@ export default function Clippy() {
     localStorage.setItem(SAVED_CHARACTERS_DATA_KEY, JSON.stringify(newState));
     setSavedCharactersData(newState);
   }
+  const {
+    characterPrimary: selectedCharacterPrimary,
+  } = getCharacterPrimaryAndAlternate({
+    simplified: selectedCharacterData?.simplified ?? null,
+    traditional: selectedCharacterData?.traditional ?? null,
+    characterType,
+  });
   const isSelectedCharacterSavable =
     selectedCharacterData != null &&
     !savedCharactersData
-      .map((data) => data.simplified)
-      .includes(selectedCharacterData.simplified);
+      .map(
+        (data) =>
+          getCharacterPrimaryAndAlternate({
+            simplified: data.simplified,
+            traditional: data.traditional,
+            characterType,
+          }).characterPrimary
+      )
+      .includes(selectedCharacterPrimary);
 
   function saveSelectedCharacter() {
     if (selectedCharacterData != null && isSelectedCharacterSavable) {
@@ -108,8 +132,7 @@ export default function Clippy() {
         />
       </div>
       <div className="grid-col">
-        {selectedCharacterData != null &&
-        selectedCharacterData.simplified != null ? (
+        {selectedCharacterData != null && selectedCharacterPrimary != null ? (
           <SelectedTextWidget
             isCharacterSavable={isSelectedCharacterSavable}
             selectedDefinitionIdx={selectedDefinitionIdx}

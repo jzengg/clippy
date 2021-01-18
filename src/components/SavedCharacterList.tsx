@@ -3,6 +3,9 @@ import { ClippyCharacterData } from "../types/interfaces";
 
 import CharacterWithVariation from "./CharacterWithVariation";
 import { downloadCharactersData } from "../lib/export";
+import { getCharacterPrimaryAndAlternate } from "src/lib/hanziwrapper";
+import { clippyCharacterType } from "src/atoms/clippyCharacterType";
+import { useRecoilValue } from "recoil";
 
 type Props = {
   charactersData: ClippyCharacterData[];
@@ -19,6 +22,7 @@ function SavedCharacterList({
   setSelectedText,
   setSelectedDefinitionIdx,
 }: Props) {
+  const characterType = useRecoilValue(clippyCharacterType);
   function downloadFile() {
     downloadCharactersData(charactersData);
   }
@@ -32,17 +36,24 @@ function SavedCharacterList({
       <div className="saved-characters-container">
         {charactersData.map(
           ({ simplified, traditional, definitionIdx }, idx) => {
+            const { characterPrimary } = getCharacterPrimaryAndAlternate({
+              simplified,
+              traditional,
+              characterType,
+            });
             const classNames = ["saved-character-item", "hoverable"];
-            if (simplified === selectedText) {
+            if (characterPrimary === selectedText) {
               classNames.push("saved-character-highlighted");
             }
             const className = classNames.join(" ");
             return (
               <div key={idx} className="saved-character-row">
                 <span
-                  onClick={() => handleClickChar(simplified, definitionIdx)}
+                  onClick={() =>
+                    handleClickChar(characterPrimary, definitionIdx)
+                  }
                   className={className}
-                  data-cy={`saved-word-${simplified}`}
+                  data-cy={`saved-word-${characterPrimary}`}
                 >
                   <CharacterWithVariation
                     simplified={simplified}
