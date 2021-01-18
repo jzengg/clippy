@@ -11,7 +11,7 @@ import {
 } from "../lib/hanziwrapper";
 import { ClippyEditor } from "./ClippyEditor";
 import PlaceholderText from "./PlaceholderText";
-import { clippyCharacterType } from "src/atoms/clippyCharacterType";
+import { clippyCharacterType } from "atoms/clippyCharacterType";
 import { useRecoilValue } from "recoil";
 
 const SAVED_EDITOR_STATE_KEY = "clippySavedEditorState";

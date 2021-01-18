@@ -1,6 +1,6 @@
 import hanzi from "hanzi";
 import pinyinize from "pinyinize";
-import { CharacterType } from "src/atoms/clippyCharacterType";
+import { CharacterType } from "atoms/clippyCharacterType";
 
 import {
   DefinitionData,

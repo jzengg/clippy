@@ -1,7 +1,7 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
-import { clippyCharacterType } from "src/atoms/clippyCharacterType";
-import { getCharacterPrimaryAndAlternate } from "src/lib/hanziwrapper";
+import { clippyCharacterType } from "atoms/clippyCharacterType";
+import { getCharacterPrimaryAndAlternate } from "lib/hanziwrapper";
 
 type Props = {
   simplified: string | null;

@@ -1,9 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import {
-  CharacterType,
-  clippyCharacterType,
-} from "src/atoms/clippyCharacterType";
+import { CharacterType, clippyCharacterType } from "atoms/clippyCharacterType";
 
 export default function CharacterTypeSelector() {
   const [characterType, setCharacterType] = useRecoilState(clippyCharacterType);

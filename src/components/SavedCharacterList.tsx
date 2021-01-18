@@ -3,8 +3,8 @@ import { ClippyCharacterData } from "../types/interfaces";
 
 import CharacterWithVariation from "./CharacterWithVariation";
 import { downloadCharactersData } from "../lib/export";
-import { getCharacterPrimaryAndAlternate } from "src/lib/hanziwrapper";
-import { clippyCharacterType } from "src/atoms/clippyCharacterType";
+import { getCharacterPrimaryAndAlternate } from "lib/hanziwrapper";
+import { clippyCharacterType } from "atoms/clippyCharacterType";
 import { useRecoilValue } from "recoil";
 
 type Props = {
