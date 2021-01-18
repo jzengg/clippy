@@ -1,6 +1,7 @@
 parallel-runs-across-platforms:
   name: Run integration tests on every OS
-  on: push
+  on:
+    push:
       branches:
         - master
   strategy:
