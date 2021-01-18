@@ -19,10 +19,9 @@ jobs:
       - name: run tests
         uses: cypress-io/github-action@v2
         with:
+          record: true
           parallel: true
           wait-on: http://localhost:3000/clippy
           group: Parallel 2x on ${{ matrix.os }}
           # on Mac and Linux we can use "npm start"
           start: npm start
-          # but for this particular project on Windows we need a different start command
-          start-windows: npm run start:ci:windows
