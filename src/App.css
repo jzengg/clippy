@@ -101,8 +101,11 @@ button:active {
   position: sticky;
   z-index: 2;
   top: 0px;
+  align-items: center;
   justify-content: center;
-  padding-bottom: 4px;
+}
+
+.character-type-selector {
 }
 
 .header-title {

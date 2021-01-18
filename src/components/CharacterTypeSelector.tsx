@@ -14,7 +14,7 @@ export default function CharacterTypeSelector() {
   }
   return (
     <select
-      data-cy="character-type-selector"
+      className="character-type-selector"
       onChange={handleChangeCharacterType}
     >
       <option
