@@ -1,5 +1,5 @@
-name: Clippy integration tests
-on: [push]
+name: Integration Tests
+on: [pull_request]
 jobs:
   cypress-run:
     runs-on: macos-latest
