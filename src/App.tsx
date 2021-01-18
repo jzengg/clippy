@@ -2,16 +2,18 @@ import "./App.css";
 import React from "react";
 import hanzi from "hanzi";
 import Clippy from "./components/Clippy";
+import { RecoilRoot } from "recoil";
+import Header from "./components/Header";
 
 function App() {
   React.useEffect(() => hanzi.start(), []);
   return (
-    <>
-      <h1 className="main-header red">Clippy</h1>
+    <RecoilRoot>
+      <Header />
       <div className="App">
         <Clippy />
       </div>
-    </>
+    </RecoilRoot>
   );
 }
 
