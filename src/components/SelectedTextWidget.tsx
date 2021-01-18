@@ -5,6 +5,7 @@ import ComponentList from "./ComponentList";
 import DefinitionList from "./DefinitionList";
 import CharacterWithVariation from "./CharacterWithVariation";
 import { ClippyCharacterData } from "../types/interfaces";
+import CharacterTypeSelector from "./CharacterTypeSelector";
 
 type Props = {
   selectedCharacterData: ClippyCharacterData;
@@ -51,14 +52,17 @@ function SelectedTextWidget({
             traditional={traditional}
           />
         </h3>
-        <button
-          disabled={!isCharacterSavable}
-          className={className}
-          onClick={handleSaveCharacter}
-          data-cy="save-button"
-        >
-          Save
-        </button>
+        <div className="selected-character-buttons">
+          <CharacterTypeSelector />
+          <button
+            disabled={!isCharacterSavable}
+            className={className}
+            onClick={handleSaveCharacter}
+            data-cy="save-button"
+          >
+            Save
+          </button>
+        </div>
       </div>
       <h3>Pinyin & Meaning</h3>
       <DefinitionList

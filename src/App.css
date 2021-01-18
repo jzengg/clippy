@@ -108,6 +108,7 @@ button:active {
 .character-type-selector {
   border-radius: 4px;
   padding: 4px;
+  margin-bottom: 4px;
 }
 
 .header-title {
@@ -172,6 +173,11 @@ button:active {
   padding: 8px;
   border: 1px dotted grey;
   margin-right: 8px;
+}
+
+.selected-character-buttons {
+  display: flex;
+  flex-direction: column;
 }
 
 .selected-character-header {

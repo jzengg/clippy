@@ -135,8 +135,9 @@ context("Select Characters", () => {
 
   it("can switch between simplified and traditional", () => {
     // default character type is simplified
-    cy.get(".character-type-selector").should("have.value", "SIMPLIFIED");
     cy.typeInEditor("電").setSelection("電");
+    cy.get(".character-type-selector").should("have.value", "SIMPLIFIED");
+
     cy.dataCy("save-button").click();
     // shows simplified as primary and traditional as alternate
     cy.get(".selected-character").contains("电(電)");
@@ -148,6 +149,7 @@ context("Select Characters", () => {
       .should("have.length", 3);
 
     // change character type to primary
+    cy.getEditorContent().setSelection("電");
     cy.get(".character-type-selector").select("TRADITIONAL");
 
     // shows traditional as primary and simplified as alternate
@@ -159,5 +161,10 @@ context("Select Characters", () => {
       .get(".radical-meaning")
       .should("have.length", 4);
     cy.get(".component-container").contains("雨");
+
+    // character type should persist through reloads
+    cy.reload();
+    cy.getEditorContent().setSelection("電");
+    cy.get(".character-type-selector").should("have.value", "TRADITIONAL");
   });
 });
