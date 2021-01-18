@@ -1,6 +1,8 @@
 parallel-runs-across-platforms:
   name: Run integration tests on every OS
-  on: [push]
+  on: push
+      branches:
+        - master
   strategy:
     matrix:
       # run 2 copies of the current job in parallel
