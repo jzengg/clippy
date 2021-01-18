@@ -121,6 +121,7 @@ button:active {
 .sticky {
   position: sticky;
   top: 60px;
+  margin-top: 8px;
 }
 
 .placeholder-text {
