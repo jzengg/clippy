@@ -10,5 +10,5 @@ jobs:
       - name: Run tests
         uses: cypress-io/github-action@v2
         with:
-          wait-on: http://localhost:3000/clippy
+          wait-on: http://localhost:3000/
           start: npm start
