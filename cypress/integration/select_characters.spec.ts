@@ -142,11 +142,22 @@ context("Select Characters", () => {
     cy.get(".selected-character").contains("电(電)");
     cy.get(".saved-character-item").contains("电(電)");
 
+    // contains simplified radicals
+    cy.get(".component-container")
+      .get(".radical-meaning")
+      .should("have.length", 3);
+
     // change character type to primary
     cy.get(".character-type-selector").select("TRADITIONAL");
 
     // shows traditional as primary and simplified as alternate
     cy.get(".selected-character").contains("電(电)");
     cy.get(".saved-character-item").contains("電(电)");
+
+    // contains traditional radicals
+    cy.get(".component-container")
+      .get(".radical-meaning")
+      .should("have.length", 4);
+    cy.get(".component-container").contains("雨");
   });
 });

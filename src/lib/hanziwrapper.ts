@@ -75,15 +75,6 @@ export function getCharacterData({
   definitionIdx: number;
   characterType: CharacterType;
 }): ClippyCharacterData {
-  const decomposeData = decomposeCharacterToRadicals(text);
-  const character = decomposeData.character;
-  const radicalComponents =
-    decomposeData.components
-      .filter((component) => component !== "No glyph available")
-      .map((component) => ({
-        component,
-        meaning: getRadicalMeaning(component),
-      })) ?? [];
   const rawDefinitionsData = definitionLookup(text);
   const definitionsData = filterDefinitionsData({
     rawDefinitionsData,
@@ -99,6 +90,18 @@ export function getCharacterData({
       .find((char) =>
         characterType === CharacterType.Simplified ? char != simplified : true
       ) ?? null;
+  const decomposeData = decomposeCharacterToRadicals(
+    (characterType === CharacterType.Simplified ? simplified : traditional) ??
+      ""
+  );
+  const character = decomposeData.character;
+  const radicalComponents =
+    decomposeData.components
+      .filter((component) => component !== "No glyph available")
+      .map((component) => ({
+        component,
+        meaning: getRadicalMeaning(component),
+      })) ?? [];
   const examples =
     getExampleUsages(character)?.map((exampleData) =>
       filterDefinitionsData({ rawDefinitionsData: exampleData, limit: 3 })
