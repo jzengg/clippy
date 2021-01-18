@@ -106,6 +106,8 @@ button:active {
 }
 
 .character-type-selector {
+  border-radius: 4px;
+  padding: 4px;
 }
 
 .header-title {

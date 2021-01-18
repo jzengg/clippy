@@ -7,6 +7,12 @@ declare namespace Cypress {
     dataCy(value: string): Chainable<Element>;
 
     /**
+     * Custom command to select the content in a draftJS editor.
+     * @example cy.getEditorContent()
+     */
+    getEditorContent(): Chainable<Element>;
+
+    /**
      * Custom command to type in a draftJS editor.
      * @example cy.typeInEditor('hello!')
      */

@@ -27,8 +27,12 @@ Cypress.Commands.add("dataCy", (value) => {
   return cy.get(`[data-cy=${value}]`);
 });
 
+Cypress.Commands.add("getEditorContent", (value) => {
+  return cy.dataCy("editor").get("[contenteditable]");
+});
+
 Cypress.Commands.add("typeInEditor", (value) => {
-  return cy.get("[contenteditable]").type(value);
+  return cy.dataCy("editor").get("[contenteditable]").type(value);
 });
 
 Cypress.Commands.add(

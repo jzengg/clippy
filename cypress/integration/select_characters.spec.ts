@@ -5,14 +5,14 @@ context("Select Characters", () => {
   });
 
   it("can add text to editor", () => {
-    cy.dataCy("editor").typeInEditor(text);
+    cy.typeInEditor(text);
   });
 
   it("can select text to get more information and can save characters", () => {
     // when nothing is selected, the definition list should be empty
     cy.dataCy("definition-list").should("not.exist");
 
-    cy.dataCy("editor").typeInEditor("窗").setSelection("窗");
+    cy.typeInEditor("窗").setSelection("窗");
 
     // definition list should now show up
     cy.dataCy("definition-list");
@@ -35,7 +35,7 @@ context("Select Characters", () => {
 
   it("can save selected definition of a character", () => {
     // 觉 is a character with two definitions
-    cy.dataCy("editor").typeInEditor("窗觉").setSelection("觉");
+    cy.typeInEditor("窗觉").setSelection("觉");
 
     // choose second definition
     cy.dataCy("definition-list").get('[type="radio"]').last().check();
@@ -81,7 +81,7 @@ context("Select Characters", () => {
 
   it("prevents duplicates in saved characters list", () => {
     // save character
-    cy.dataCy("editor").typeInEditor("觉").setSelection("觉");
+    cy.typeInEditor("觉").setSelection("觉");
     cy.dataCy("save-button").click();
 
     // it should show up in the saved words list
@@ -91,40 +91,42 @@ context("Select Characters", () => {
     cy.dataCy("save-button").should("be.disabled");
 
     // save shortcut should do nothing
-    cy.dataCy("editor").typeInEditor("觉").setSelection("觉").type("{cmd+s}");
+    cy.getEditorContent().setSelection("觉").type("{cmd+s}");
 
     // should only have 1 character saved
     cy.get(".saved-character-row").should("have.length", 1);
   });
 
   it("prevents invalid definition selection", () => {
-    // type character with 3 definitions
-    cy.dataCy("editor").typeInEditor("的").setSelection("的");
+    // type characters with 3, 2 and 1 definitions
+    cy.typeInEditor("的觉窗").setSelection("的");
 
     // choose third definition
     cy.dataCy("definition-list").get('[type="radio"]').last().check();
 
     // switch to character with 2 definitions
-    cy.dataCy("editor").typeInEditor("觉").setSelection("觉");
+    cy.getEditorContent().setSelection("觉");
+
+    // selected definition should default to first definition if new character has less definitions than old
     cy.dataCy("definition-list")
       .get('[type="radio"]')
       .first()
       .should("be.checked");
 
-    // add character with only one definition, can't go above only definition
-    cy.dataCy("editor")
-      .typeInEditor("窗")
-      .setSelection("窗")
-      .type("{cmd+uparrow}");
+    // switch to character with 1 definition
+    cy.getEditorContent().setSelection("窗");
+
+    // can't go below only definition
+    cy.getEditorContent().setSelection("窗").type("{cmd+downarrow}");
+
     cy.dataCy("definition-list")
       .get('[type="radio"]')
       .first()
       .should("be.checked");
-    // can't go below only definition
-    cy.dataCy("editor")
-      .typeInEditor("窗")
-      .setSelection("窗")
-      .type("{cmd+downarrow}");
+
+    // can't go above only definition
+    cy.getEditorContent().setSelection("窗").type("{cmd+uparrow}");
+
     cy.dataCy("definition-list")
       .get('[type="radio"]')
       .first()
@@ -134,7 +136,7 @@ context("Select Characters", () => {
   it("can switch between simplified and traditional", () => {
     // default character type is simplified
     cy.get(".character-type-selector").should("have.value", "SIMPLIFIED");
-    cy.dataCy("editor").typeInEditor("電").setSelection("電");
+    cy.typeInEditor("電").setSelection("電");
     cy.dataCy("save-button").click();
     // shows simplified as primary and traditional as alternate
     cy.get(".selected-character").contains("电(電)");
