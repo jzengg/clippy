@@ -130,4 +130,21 @@ context("Select Characters", () => {
       .first()
       .should("be.checked");
   });
+
+  it("can switch between simplified and traditional", () => {
+    // default character type is simplified
+    cy.dataCy("character-type-selector").should("have.value", "SIMPLIFIED");
+    cy.dataCy("editor").typeInEditor("電").setSelection("電");
+    cy.dataCy("save-button").click();
+    // shows simplified as primary and traditional as alternate
+    cy.get(".selected-character").contains("电(電)");
+    cy.get(".saved-character-item").contains("电(電)");
+
+    // change character type to primary
+    cy.dataCy("character-type-selector").select("TRADITIONAL");
+
+    // shows traditional as primary and simplified as alternate
+    cy.get(".selected-character").contains("電(电)");
+    cy.get(".saved-character-item").contains("電(电)");
+  });
 });

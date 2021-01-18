@@ -13,7 +13,10 @@ export default function CharacterTypeSelector() {
     setCharacterType(value);
   }
   return (
-    <select onChange={handleChangeCharacterType}>
+    <select
+      data-cy="character-type-selector"
+      onChange={handleChangeCharacterType}
+    >
       <option
         selected={characterType === CharacterType.Simplified}
         value={CharacterType.Simplified}
