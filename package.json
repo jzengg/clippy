@@ -53,7 +53,7 @@
   "devDependencies": {
     "@types/draft-js": "^0.10.44",
     "@types/recoil": "0.0.1",
-    "cypress": "^6.2.1",
+    "cypress": "^6.3.0",
     "eslint-plugin-react": "^7.22.0"
   }
 }

@@ -21,6 +21,6 @@ export interface ClippyCharacterData {
 }
 
 export interface RadicalDecompositionData {
-  character: string;
+  character: string | null;
   components: string[];
 }

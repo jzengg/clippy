@@ -12,6 +12,9 @@ context("Select Characters", () => {
     // when nothing is selected, the definition list should be empty
     cy.dataCy("definition-list").should("not.exist");
 
+    // can select two characters with no definition without throwing
+    cy.typeInEditor('在成').setSelection('在成');
+
     cy.typeInEditor("窗").setSelection("窗");
 
     // definition list should now show up

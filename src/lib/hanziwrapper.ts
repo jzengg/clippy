@@ -16,7 +16,8 @@ export function decomposeCharacterToRadicals(
   character: string
 ): RadicalDecompositionData {
   // only get radical decomposition
-  return hanzi.decompose(character, 2);
+  const rawData = hanzi.decompose(character, 2);
+  return { character: rawData?.character ?? null, components: rawData.components ?? [] };
 }
 
 export function definitionLookup(character: string): DefinitionData[] | null {
@@ -24,7 +25,7 @@ export function definitionLookup(character: string): DefinitionData[] | null {
 }
 
 export function getExampleUsages(
-  character: string
+  character: string | null
 ): [DefinitionData[], DefinitionData[]] {
   return hanzi.getExamples(character);
 }
