@@ -59,7 +59,6 @@ function filterDefinitionsData({
   const seenDefinitions = new Set();
   rawDefinitionsData
     .filter((definitionData) => !definitionData.definition.includes("surname"))
-    .slice(0, limit)
     .forEach((definitionData) => {
       if (!seenDefinitions.has(definitionData.definition)) {
         definitionsData.push(cleanDefinitionData(definitionData));
@@ -67,7 +66,7 @@ function filterDefinitionsData({
         seenDefinitions.add(definitionData.definition);
       }
     });
-  return definitionsData;
+  return definitionsData.slice(0, limit);
 }
 
 export function getCharacterData({
@@ -91,9 +90,7 @@ export function getCharacterData({
   const traditional =
     definitionsData
       .map((data) => data.traditional)
-      .find((char) =>
-        characterType === CharacterType.Simplified ? char != simplified : true
-      ) ?? null;
+      .find((char) => char != simplified) ?? simplified;
   const decomposeData = decomposeCharacterToRadicals(
     (characterType === CharacterType.Simplified ? simplified : traditional) ??
       ""

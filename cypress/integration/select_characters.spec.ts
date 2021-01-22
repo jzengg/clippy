@@ -169,5 +169,13 @@ context("Select Characters", () => {
     cy.reload();
     cy.getEditorContent().setSelection("電");
     cy.get(".character-type-selector").should("have.value", "TRADITIONAL");
+
+    // character that's the same in simplified and traditional has
+    // non null simplified and traditional value when saved in simplified
+    cy.get(".character-type-selector").select("SIMPLIFIED");
+    cy.typeInEditor("乖").setSelection("乖");
+    cy.dataCy("save-button").click();
+    cy.get(".character-type-selector").select("TRADITIONAL");
+    cy.get(".saved-character-item").contains(/^乖$/);
   });
 });
