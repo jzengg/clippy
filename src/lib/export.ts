@@ -43,6 +43,10 @@ function convertCharactersDataToTSV(charactersData: ClippyCharacterData[]) {
       const { definition, pinyin } = definitionData;
       const examples = [...highFreqExamples, ...mediumFreqExamples];
       const exampleTexts = getExampleTexts(examples);
+      // fill out potentially column section so anki recognizes all columns
+      while (exampleTexts.length < 3) {
+        exampleTexts.push("");
+      }
       return [
         simplified,
         pinyin,
