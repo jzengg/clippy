@@ -1,9 +1,10 @@
+import { Radio, RadioGroup, Stack } from "@chakra-ui/react";
 import React from "react";
 import { DefinitionData } from "types/interfaces";
 
 type Props = {
   definitions: DefinitionData[];
-  handleSelectDefinition: (e: React.BaseSyntheticEvent) => void;
+  handleSelectDefinition: (nextValue: React.ReactText) => void;
   selectedDefinitionIdx: number;
 };
 
@@ -13,24 +14,18 @@ function DefinitionList({
   handleSelectDefinition,
 }: Props) {
   return (
-    <div className="definition-container" data-cy="definition-list">
-      {definitions.map(({ pinyin, definition }, idx) => {
-        return (
-          <div className="definition-row" key={idx}>
-            <label>
-              <input
-                onChange={handleSelectDefinition}
-                checked={selectedDefinitionIdx === idx}
-                type="radio"
-                value={idx}
-                className="selected-definition"
-              />
-              {`${pinyin} - ${definition}`}
-            </label>
-          </div>
-        );
-      })}
-    </div>
+    <RadioGroup
+      name="selected-definition"
+      data-cy="definition-list"
+      onChange={handleSelectDefinition}
+      value={selectedDefinitionIdx.toString()}
+    >
+      {definitions.map(({ pinyin, definition }, idx) => (
+        <Stack key={idx}>
+          <Radio value={idx.toString()}>{`${pinyin} - ${definition}`}</Radio>
+        </Stack>
+      ))}
+    </RadioGroup>
   );
 }
 

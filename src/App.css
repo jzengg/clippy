@@ -1,98 +1,3 @@
-/* Box sizing rules */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-/* Remove default margin */
-body,
-h1,
-h2,
-h3,
-h4,
-p,
-figure,
-blockquote,
-dl,
-dd {
-  margin: 0;
-}
-
-/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
-ul[role="list"],
-ol[role="list"] {
-  list-style: none;
-}
-
-/* Set core root defaults */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Set core body defaults */
-body {
-  min-height: 100vh;
-  text-rendering: optimizeSpeed;
-  line-height: 1.5;
-}
-
-/* A elements that don't have a class get default styles */
-a:not([class]) {
-  text-decoration-skip-ink: auto;
-}
-
-/* Make images easier to work with */
-img,
-picture {
-  max-width: 100%;
-  display: block;
-}
-
-/* Inherit fonts for inputs and buttons */
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
-
-/* Remove all animations and transitions for people that prefer not to see them */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Buttons styles start */
-button {
-  display: inline-block;
-  border: none;
-  margin: 0;
-  border-radius: 8px;
-  padding: 4px 8px;
-  text-decoration: none;
-  font-family: sans-serif;
-  cursor: pointer;
-  text-align: center;
-  transition: background 250ms ease-in-out, transform 150ms ease;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-button:focus {
-  outline: 1px solid #fff;
-}
-
-button:active {
-  transform: scale(0.95);
-}
-/* Button styles end */
 .header {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px,
     rgba(0, 0, 0, 0.05) 0px 1px 4px 0px, rgba(0, 0, 0, 0.05) 0px 2px 8px 0px;
@@ -103,12 +8,6 @@ button:active {
   top: 0px;
   align-items: center;
   justify-content: center;
-}
-
-.character-type-selector {
-  border-radius: 4px;
-  padding: 4px;
-  margin-bottom: 4px;
 }
 
 .header-title {
@@ -159,9 +58,6 @@ button:active {
   transform: scale(1.05);
 }
 
-.disabled-button {
-  cursor: not-allowed;
-}
 
 .saved-character-highlighted {
   color: red;
@@ -211,32 +107,9 @@ button:active {
   margin-bottom: 8px;
 }
 
-.definition-container {
-  margin-bottom: 8px;
-}
 
 .saved-characters-header {
   margin-bottom: 4px;
-}
-
-.save-character-button {
-  background-color: rgb(27, 116, 228);
-  color: white;
-}
-
-.save-character-button:disabled {
-  opacity: 0.3;
-}
-
-.remove-saved-character-button {
-}
-
-.definition-row {
-  margin-left: 16px;
-}
-.selected-definition {
-  margin-right: 8px;
-  padding: 4px;
 }
 
 .App {

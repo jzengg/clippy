@@ -6,6 +6,8 @@ import { downloadCharactersData } from "lib/export";
 import { getCharacterPrimaryAndAlternate } from "lib/hanziwrapper";
 import { clippyCharacterType } from "atoms/clippyCharacterType";
 import { useRecoilValue } from "recoil";
+import { Button, IconButton } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 type Props = {
   charactersData: ClippyCharacterData[];
@@ -60,23 +62,25 @@ function SavedCharacterList({
                     traditional={traditional}
                   />
                 </span>
-                <button
-                  className="remove-saved-character-button hoverable"
+                <IconButton
+                  className="remove-saved-character-button"
+                  icon={<DeleteIcon />}
+                  size="xs"
+                  aria-label="Remove saved character"
                   onClick={() => handleRemove(idx)}
-                >
-                  X
-                </button>
+                />
               </div>
             );
           }
         )}
       </div>
-      <button
-        className="prepare-download-button hoverable"
+      <Button
+        className="prepare-download-button"
+        size="sm"
         onClick={downloadFile}
       >
-        Export To TSV
-      </button>
+        Export to TSV
+      </Button>
     </div>
   );
 }

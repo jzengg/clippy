@@ -41,7 +41,10 @@ context("Select Characters", () => {
     cy.typeInEditor("窗觉").setSelection("觉");
 
     // choose second definition
-    cy.dataCy("definition-list").get('[type="radio"]').last().check();
+    cy.dataCy("definition-list")
+      .get('[name="selected-definition"]')
+      .last()
+      .check({ force: true });
 
     // save it
     cy.dataCy("save-button").click();
@@ -59,7 +62,7 @@ context("Select Characters", () => {
 
     // second definition should be checked
     cy.dataCy("definition-list")
-      .get('[type="radio"]')
+      .get('[name="selected-definition"]')
       .last()
       .should("be.checked");
   });
@@ -105,7 +108,10 @@ context("Select Characters", () => {
     cy.typeInEditor("的觉窗").setSelection("的");
 
     // choose third definition
-    cy.dataCy("definition-list").get('[type="radio"]').last().check();
+    cy.dataCy("definition-list")
+      .get('[type="radio"]')
+      .last()
+      .check({ force: true });
 
     // switch to character with 2 definitions
     cy.getEditorContent().setSelection("觉");
@@ -172,8 +178,8 @@ context("Select Characters", () => {
 
     // character that's the same in simplified and traditional has
     // non null simplified and traditional value when saved in simplified
-    cy.get(".character-type-selector").select("SIMPLIFIED");
     cy.typeInEditor("乖").setSelection("乖");
+    cy.get(".character-type-selector").select("SIMPLIFIED");
     cy.dataCy("save-button").click();
     cy.get(".character-type-selector").select("TRADITIONAL");
     cy.get(".saved-character-item").contains(/^乖$/);

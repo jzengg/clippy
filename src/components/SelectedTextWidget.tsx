@@ -6,6 +6,7 @@ import DefinitionList from "components/DefinitionList";
 import CharacterWithVariation from "components/CharacterWithVariation";
 import { ClippyCharacterData } from "types/interfaces";
 import CharacterTypeSelector from "components/CharacterTypeSelector";
+import { Button } from "@chakra-ui/react";
 
 type Props = {
   selectedCharacterData: ClippyCharacterData;
@@ -35,14 +36,10 @@ function SelectedTextWidget({
     }
   }, [definitionsData, selectedDefinitionIdx]);
 
-  function handleSelectDefinition(e: React.BaseSyntheticEvent) {
-    setSelectedDefinitionIdx(parseInt(e.target.value));
+  function handleSelectDefinition(value: React.ReactText) {
+    setSelectedDefinitionIdx(parseInt(value.toString()));
   }
 
-  const className = [
-    "save-character-button",
-    isCharacterSavable ? "hoverable" : "disabled-button",
-  ].join(" ");
   return (
     <div className="sticky">
       <div className="selected-character-header">
@@ -54,14 +51,15 @@ function SelectedTextWidget({
         </h3>
         <div className="selected-character-buttons">
           <CharacterTypeSelector />
-          <button
-            disabled={!isCharacterSavable}
-            className={className}
+          <Button
+            size="sm"
             onClick={handleSaveCharacter}
+            isDisabled={!isCharacterSavable}
             data-cy="save-button"
+            colorScheme="blue"
           >
             Save
-          </button>
+          </Button>
         </div>
       </div>
       <h3>Pinyin & Meaning</h3>
