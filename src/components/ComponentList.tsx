@@ -15,7 +15,7 @@ function ComponentList({ components }: Props) {
             <Text as="span" color="red.600" mr={1}>
               {component}
             </Text>
-            <Text as="span">
+            <Text className="radical-meaning" as="span">
               {meaning != "N/A" && `(${meaning})`}
               {idx != components.length - 1 && ", "}
             </Text>
