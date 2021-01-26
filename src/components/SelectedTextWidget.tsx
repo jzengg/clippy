@@ -6,7 +6,7 @@ import DefinitionList from "components/DefinitionList";
 import CharacterWithVariation from "components/CharacterWithVariation";
 import { ClippyCharacterData } from "types/interfaces";
 import CharacterTypeSelector from "components/CharacterTypeSelector";
-import { Button } from "@chakra-ui/react";
+import { Box, Button, Heading } from "@chakra-ui/react";
 
 type Props = {
   selectedCharacterData: ClippyCharacterData;
@@ -62,20 +62,30 @@ function SelectedTextWidget({
           </Button>
         </div>
       </div>
-      <h3>Pinyin & Meaning</h3>
-      <DefinitionList
-        selectedDefinitionIdx={selectedDefinitionIdx}
-        handleSelectDefinition={handleSelectDefinition}
-        definitions={definitionsData}
-      />
-      <h3>
-        Radicals <ComponentList components={radicalComponents} />
-      </h3>
-      <h3>Example Words</h3>
-      <h4>High Frequency</h4>
-      <ExampleWordList examples={highFreqExamples} />
-      <h4>Medium Frequency</h4>
-      <ExampleWordList examples={mediumFreqExamples} />
+      <Heading mb="1" size="md">
+        Pinyin & Meaning
+      </Heading>
+      <Box mb="3">
+        <DefinitionList
+          selectedDefinitionIdx={selectedDefinitionIdx}
+          handleSelectDefinition={handleSelectDefinition}
+          definitions={definitionsData}
+        />
+      </Box>
+      <Heading mb="1" size="md">
+        Radicals
+      </Heading>
+      <Box mb="3">
+        <ComponentList components={radicalComponents} />
+      </Box>
+      <Heading size="md">High Frequency Examples</Heading>
+      <Box mb="3">
+        <ExampleWordList examples={highFreqExamples} />
+      </Box>
+      <Heading size="md">Medium Frequency Examples</Heading>
+      <Box mb="3">
+        <ExampleWordList examples={mediumFreqExamples} />
+      </Box>
     </div>
   );
 }

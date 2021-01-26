@@ -10,10 +10,6 @@
   justify-content: center;
 }
 
-.header-title {
-  margin-right: 16px;
-}
-
 .grid-root {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 5fr) minmax(0, 3fr);
@@ -58,7 +54,6 @@
   transform: scale(1.05);
 }
 
-
 .saved-character-highlighted {
   color: red;
 }
@@ -88,11 +83,6 @@
   border: 1px dotted grey;
 }
 
-.radical-meaning {
-  font-size: 16px;
-  font-weight: 400;
-}
-
 .example-character {
   font-size: 20px;
   margin-right: 4px;
@@ -106,7 +96,6 @@
   margin-left: 16px;
   margin-bottom: 8px;
 }
-
 
 .saved-characters-header {
   margin-bottom: 4px;

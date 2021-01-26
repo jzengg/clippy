@@ -6,7 +6,7 @@ import { downloadCharactersData } from "lib/export";
 import { getCharacterPrimaryAndAlternate } from "lib/hanziwrapper";
 import { clippyCharacterType } from "atoms/clippyCharacterType";
 import { useRecoilValue } from "recoil";
-import { Button, IconButton } from "@chakra-ui/react";
+import { Button, Heading, IconButton } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 
 type Props = {
@@ -34,7 +34,9 @@ function SavedCharacterList({
   }
   return (
     <div className="sticky">
-      <h3 className="saved-characters-header">Saved</h3>
+      <Heading mb="1" size="md">
+        Saved
+      </Heading>
       <div className="saved-characters-container">
         {charactersData.map(
           ({ simplified, traditional, definitionIdx }, idx) => {
