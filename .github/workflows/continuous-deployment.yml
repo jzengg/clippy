@@ -35,3 +35,6 @@ jobs:
 
       - name: S3 sync
         run: aws s3 sync ./build/ s3://clippy-help --delete
+
+      - name: Invalidate Cloudfront Distribution
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths 'static/*'
